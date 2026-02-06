@@ -1,5 +1,6 @@
 package lab1.part1;
 
+import lab1.part1.function.ArcSinSeries;
 
 public class App {
   public static void main(String[] args) {

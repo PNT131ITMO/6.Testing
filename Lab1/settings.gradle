@@ -6,4 +6,5 @@
  */
 
 rootProject.name = 'Lab1'
-include 'part1'
+include 'part1, part2'
+

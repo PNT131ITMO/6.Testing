@@ -1,4 +1,4 @@
-package lab1.part1;
+package lab1.part1.function;
 
 public class ArcSinSeries {
     public static double asin(double x, double eps) {
