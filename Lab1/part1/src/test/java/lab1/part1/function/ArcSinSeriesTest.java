@@ -1,4 +1,4 @@
-package lab1.part1;
+package lab1.part1.function;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

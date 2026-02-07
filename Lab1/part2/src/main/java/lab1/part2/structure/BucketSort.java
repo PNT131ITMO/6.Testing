@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BucketSort {
-    private enum Point{
+    public enum Point{
         START,
         EARLY_RETURN,
         FIND_MIN_MAX,
@@ -93,5 +93,38 @@ public class BucketSort {
             insertionSort(b);
         }
 
+        add(trace, Point.GATHER);
+        int pos = 0;
+        for (int i = 0; i < bucketCount; i++) {
+            for (double v : buckets.get(i)) {
+                a[pos++] = v;
+            }
+        }
+
+        add(trace, Point.END);
+    }
+
+    private static int mapToBucket(double x, double min, double range, int bucketCount) {
+        double normalized = (x - min) / range;
+        int idx =(int) Math.floor(normalized * bucketCount);
+        if (idx < 0) idx = 0;
+        if (idx >= bucketCount) idx = bucketCount - 1;
+        return idx;  
+    }
+
+    private static void insertionSort(List<Double> b){
+        for (int i = 1; i < b.size() ; i++) {
+            double key = b.get(i);
+            int j = i - 1;
+            while (j >= 0 && b.get(j) > key) {
+                b.set(j+1, b.get(j));
+                j--;
+            }
+            b.set(j+1, key);
+        }
+    }
+
+    private static void add(List<Point> trace, Point p) {
+        if(trace != null) trace.add(p);
     }
 }
