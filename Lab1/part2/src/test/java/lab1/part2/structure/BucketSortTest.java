@@ -98,6 +98,40 @@ class BucketSortTest {
     }
 
     @Test
+    @DisplayName("Trace test: early return for empty array")
+    void traceEarlyReturnEmpty() {
+        double[] a = {};
+        List<BucketSort.Point> trace = new ArrayList<>();
+        BucketSort.sort(a, 5, trace);
+
+        List<BucketSort.Point> expected = List.of(
+            BucketSort.Point.START,
+            BucketSort.Point.EARLY_RETURN,
+            BucketSort.Point.END
+        );
+
+        assertEquals(expected, trace);
+    }
+
+    @Test
+    @DisplayName("Trace test: range zero (all equal)")
+    void traceRangeZeroAllEqual() {
+        double[] a = {7, 7, 7, 7};
+        List<BucketSort.Point> trace = new ArrayList<>();
+        BucketSort.sort(a, 3, trace);
+
+        List<BucketSort.Point> expected = List.of( 
+            BucketSort.Point.START,
+            BucketSort.Point.FIND_MIN_MAX,
+            BucketSort.Point.RANGE_ZERO,
+            BucketSort.Point.END
+        );
+
+        assertEquals(expected, trace);
+    }
+
+
+    @Test
     @DisplayName("Invalid inputs: null array, non-finite values, invalid bucketCount")
     void invalidInputs() {
         assertThrows(IllegalArgumentException.class, () -> BucketSort.sort(null, 5, new ArrayList<>()));
