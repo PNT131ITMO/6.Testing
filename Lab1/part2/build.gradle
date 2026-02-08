@@ -1,7 +1,11 @@
 plugins {
     id 'java'
     id 'application'
+    id 'jacoco'
 }
+
+group = 'lab1'
+version = '1.0.0'
 
 repositories { mavenCentral() }
 
@@ -11,8 +15,21 @@ dependencies {
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
-test { useJUnitPlatform() }
+test {
+    useJUnitPlatform()
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+}
 
 application {
     mainClass = 'lab1.part2.App'
+}
+jacocoTestReport {
+    dependsOn test
+    reports {
+        html.required = true
+        xml.required = false
+        csv.required = false
+    }
 }
