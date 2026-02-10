@@ -20,18 +20,18 @@ class ArcSinSeriesTest {
     }
 
     @Test
-    @DisplayName("Invalid domain throws IllegalArgumentException")
-    void invalidDomainThrows() {
-        assertThrows(IllegalArgumentException.class, () -> ArcSinSeries.asin(1.0001, EPS));
-        assertThrows(IllegalArgumentException.class, () -> ArcSinSeries.asin(-1.5, EPS));
+    @DisplayName("Invalid domain returns NaN (like Math.asin)")
+    void invalidDomainReturnsNaN() {
+        assertTrue(Double.isNaN(ArcSinSeries.asin(1.0001, EPS)));
+        assertTrue(Double.isNaN(ArcSinSeries.asin(-1.5, EPS)));
     }
 
     @Test
-    @DisplayName("NaN/Infinity inputs throw IllegalArgumentException")
-    void nanAndInfinityThrow() {
-        assertThrows(IllegalArgumentException.class, () -> ArcSinSeries.asin(Double.NaN, EPS));
-        assertThrows(IllegalArgumentException.class, () -> ArcSinSeries.asin(Double.POSITIVE_INFINITY, EPS));
-        assertThrows(IllegalArgumentException.class, () -> ArcSinSeries.asin(Double.NEGATIVE_INFINITY, EPS));
+    @DisplayName("NaN/Infinity inputs return NaN (like Math.asin)")
+    void nanAndInfinityReturnNaN() {
+        assertTrue(Double.isNaN(ArcSinSeries.asin(Double.NaN, EPS)));
+        assertTrue(Double.isNaN(ArcSinSeries.asin(Double.POSITIVE_INFINITY, EPS)));
+        assertTrue(Double.isNaN(ArcSinSeries.asin(Double.NEGATIVE_INFINITY, EPS)));
     }
 
     @Test
@@ -44,7 +44,7 @@ class ArcSinSeriesTest {
     }
 
     @ParameterizedTest(name = "corner x = {0}")
-    @DisplayName("Corner & boundary values (inside compare to Math.asin; outside => throw)")
+    @DisplayName("Corner & boundary values (compare to Math.asin; outside => NaN)")
     @ValueSource(doubles = {
             -999.9,
             -1.0000001,
@@ -67,15 +67,14 @@ class ArcSinSeriesTest {
             Double.MIN_VALUE
     })
     void checkCornerValues(double x) {
-        if (!Double.isFinite(x) || Math.abs(x) > 1.0) {
-            assertThrows(IllegalArgumentException.class, () -> ArcSinSeries.asin(x, EPS));
-            return;
-        }
-
         double actual = ArcSinSeries.asin(x, EPS, MAX_TERMS);
         double expected = Math.asin(x);
 
-        assertEquals(expected, actual, tolFor(x));
+        if (Double.isNaN(expected)) {
+            assertTrue(Double.isNaN(actual));
+        } else {
+            assertEquals(expected, actual, tolFor(x));
+        }
     }
 
     @Test
@@ -87,7 +86,6 @@ class ArcSinSeriesTest {
         assertEquals(0.0, y, 0.0);
         assertEquals(Double.doubleToRawLongBits(x), Double.doubleToRawLongBits(y));
     }
-
 
     @ParameterizedTest
     @DisplayName("Matches Math.asin for typical points |x| <= 0.9")

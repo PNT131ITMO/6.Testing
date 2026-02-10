@@ -6,8 +6,16 @@ public class ArcSinSeries {
         return asin(x, eps, 1_000_000);
     }
 
+    public static double asin(double x, double eps, double maxTerms) {
+        return asin(x, eps, (int) maxTerms);
+    }
+
     public static double asin(double x, double eps, int maxTerms) {
-        validateInputs(x, eps, maxTerms);
+        validateInputs(eps, maxTerms);
+
+        if (Double.isNaN(x)) return Double.NaN;
+        if (!Double.isFinite(x)) return Double.NaN;
+        if (x < -1.0 || x > 1.0) return Double.NaN;
 
         if (x == 0.0) return x;
 
@@ -41,11 +49,13 @@ public class ArcSinSeries {
     }
 
     public static double asinNTerms(double x, int nTerms) {
-        if (!Double.isFinite(x)) throw new IllegalArgumentException("x must be finite");
-        if (x < -1.0 || x > 1.0) throw new IllegalArgumentException("x must be in [-1, 1]");
         if (nTerms <= 0) throw new IllegalArgumentException("nTerms must be >= 1");
 
-        if (x == 0.0) return x; // preserve -0.0
+        if (Double.isNaN(x)) return Double.NaN;
+        if(!Double.isFinite(x)) return Double.NaN;
+        if (x < -1.0 || x > 1.0) return Double.NaN;
+
+        if (x == 0.0) return x;
         if (x == 1.0) return Math.PI / 2.0;
         if (x == -1.0) return -Math.PI / 2.0;
 
@@ -65,10 +75,10 @@ public class ArcSinSeries {
         return sum;
     }
 
-    private static void validateInputs(double x, double eps, int maxTerms) {
-        if (!Double.isFinite(x)) throw new IllegalArgumentException("x must be finite");
-        if (x < -1.0 || x > 1.0) throw new IllegalArgumentException("x must be in [-1, 1]");
-        if (!Double.isFinite(eps) || eps <= 0.0) throw new IllegalArgumentException("eps must be finite and > 0");
-        if (maxTerms <= 0) throw new IllegalArgumentException("maxTerms must be > 0");
+    private static void validateInputs(double eps, int maxTerms) {
+        if (!Double.isFinite(eps) || eps <= 0.0)
+            throw new IllegalArgumentException("eps must be finite and > 0");
+        if (maxTerms <= 0)
+            throw new IllegalArgumentException("maxTerms must be > 0");
     }
 }
