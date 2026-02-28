@@ -7,39 +7,36 @@ import java.math.MathContext;
 
 public class LogBaseFunction extends AbstractMathFunction {
 
-    private final int logBase;
-    private final LnFunction lnFunction;
+  private final int base;
+  private final LnFunction lnFunction = new LnFunction();
 
-    public LogBaseFunction(int logBase) {
-        if (logBase <= 0 || logBase == 1) {
-            throw new IllegalArgumentException("Invalid log base!");
-        }
-        this.logBase = logBase;
-        this.lnFunction = new LnFunction();
+  public LogBaseFunction(int base) {
+    if (base <= 0 || base == 1) throw new IllegalArgumentException("Invalid base: " + base);
+    this.base = base;
+  }
+
+  public int getBase() {
+    return base;
+  }
+
+  @Override
+  public BigDecimal calculate(BigDecimal x, BigDecimal eps) {
+    validateInputs(x, eps);
+
+    if (x.compareTo(BigDecimal.ZERO) <= 0) {
+      throw new ArithmeticException("log_b(x) undefined for x <= 0: " + x);
     }
 
-    public int getLogBase() {
-        return logBase;
+    MathContext mc = mathCtx(eps, 12);
+
+    BigDecimal lnX = lnFunction.calculate(x, eps);
+    BigDecimal lnB = lnFunction.calculate(new BigDecimal(base), eps);
+
+    if (isNearZero(lnB, eps)) {
+      throw new ArithmeticException("ln(base) ~ 0 for base=" + base);
     }
 
-    @Override
-    public BigDecimal calculate(BigDecimal x, BigDecimal eps) {
-        validateInputs(x, eps);
-        
-        if (x.compareTo(BigDecimal.ZERO) <= 0) {
-            throw new ArithmeticException("log_b(x) undefined for x <= 0");
-        }
-
-        MathContext mc = mathCtx(eps, 12);
-
-        BigDecimal lnX = lnFunction.calculate(x, eps);
-        BigDecimal lnB = lnFunction.calculate(new BigDecimal(logBase), eps);
-
-        if (isNearZero(lnB, eps)) {
-            throw new ArithmeticException("ln(base) is ~0!");
-        }
-
-        BigDecimal resultValue = lnX.divide(lnB, mc);
-    }
-
+    BigDecimal resultValue = lnX.divide(lnB, mc);
+    return roundToEps(resultValue, eps);
+  }
 }

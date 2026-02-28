@@ -5,7 +5,7 @@ import lab2.core.AbstractMathFunction;
 import java.math.BigDecimal;
 import java.math.MathContext;
 
-import static lab2.math.trig.TrigConstants.*;
+import static lab2.mathfunctions.trig.TrigConstants.*;
 
 public class SinFunction extends AbstractMathFunction {
 
@@ -17,7 +17,7 @@ public class SinFunction extends AbstractMathFunction {
     BigDecimal xReduced = normalizeToMinusPiPi(x, mc);
 
     BigDecimal seriesTerm = xReduced;
-    BigDecimal seriesSum = seriesTerm;
+    BigDecimal seriesSum  = seriesTerm;
 
     BigDecimal x2 = xReduced.multiply(xReduced, mc);
 

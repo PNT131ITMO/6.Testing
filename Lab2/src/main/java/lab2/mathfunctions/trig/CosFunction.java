@@ -3,7 +3,7 @@ package lab2.mathfunctions.trig;
 import java.math.BigDecimal;
 import java.math.MathContext;
 
-import static lab2.math.trig.TrigConstants.HALF_PI;
+import static lab2.mathfunctions.trig.TrigConstants.HALF_PI;
 
 public class CosFunction extends SinFunction {
 

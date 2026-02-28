@@ -4,5 +4,5 @@ import java.math.BigDecimal;
 
 @FunctionalInterface
 public interface MathFunction {
-    BigDecimal calculate(BigDecimal x, BigDecimal eps);
+  BigDecimal calculate(BigDecimal x, BigDecimal eps);
 }
