@@ -10,17 +10,57 @@ import java.math.MathContext;
 
 public class SystemFunction extends AbstractMathFunction {
 
-  private final SinFunction sinFunction = new SinFunction();
-  private final CosFunction cosFunction = new CosFunction();
-  private final TanFunction tanFunction = new TanFunction();
-  private final SecFunction secFunction = new SecFunction();
-  private final CscFunction cscFunction = new CscFunction();
-  private final CotFunction cotFunction = new CotFunction();
+  private SinFunction sinFunction;
+  private CosFunction cosFunction;
+  private TanFunction tanFunction;
+  private SecFunction secFunction;
+  private CscFunction cscFunction;
+  private CotFunction cotFunction;
 
-  private final LnFunction lnFunction = new LnFunction();
-  private final LogBaseFunction log2Function  = new LogBaseFunction(2);
-  private final LogBaseFunction log5Function  = new LogBaseFunction(5);
-  private final LogBaseFunction log10Function = new LogBaseFunction(10);
+  private LnFunction lnFunction;
+  private LogBaseFunction log2Function;
+  private LogBaseFunction log5Function;
+  private LogBaseFunction log10Function;
+
+  public SystemFunction() {
+    this(
+        new SinFunction(),
+        new CosFunction(),
+        new TanFunction(),
+        new SecFunction(),
+        new CscFunction(),
+        new CotFunction(),
+        new LnFunction(),
+        new LogBaseFunction(2),
+        new LogBaseFunction(5),
+        new LogBaseFunction(10)
+    );
+  }
+
+  public SystemFunction(
+      SinFunction sinFunction,
+      CosFunction cosFunction,
+      TanFunction tanFunction,
+      SecFunction secFunction,
+      CscFunction cscFunction,
+      CotFunction cotFunction,
+      LnFunction lnFunction,
+      LogBaseFunction log2Function,
+      LogBaseFunction log5Function,
+      LogBaseFunction log10Function
+  ) {
+    this.sinFunction = sinFunction;
+    this.cosFunction = cosFunction;
+    this.tanFunction = tanFunction;
+    this.secFunction = secFunction;
+    this.cscFunction = cscFunction;
+    this.cotFunction = cotFunction;
+
+    this.lnFunction = lnFunction;
+    this.log2Function = log2Function;
+    this.log5Function = log5Function;
+    this.log10Function = log10Function;
+  }
 
   @Override
   public BigDecimal calculate(BigDecimal x, BigDecimal eps) {
@@ -30,7 +70,6 @@ public class SystemFunction extends AbstractMathFunction {
     BigDecimal internalEps = eps.setScale(eps.scale() + 10, ROUNDING);
 
     if (x.compareTo(BigDecimal.ZERO) <= 0) {
-
       BigDecimal sinValue = sinFunction.calculate(x, internalEps);
       BigDecimal cosValue = cosFunction.calculate(x, internalEps);
       BigDecimal tanValue = tanFunction.calculate(x, internalEps);
@@ -38,7 +77,6 @@ public class SystemFunction extends AbstractMathFunction {
       BigDecimal cscValue = cscFunction.calculate(x, internalEps);
       BigDecimal cotValue = cotFunction.calculate(x, internalEps);
 
-      // (((((tan-csc)^2)^3)-csc) * ((((cot*sin)^2)/sec)/cot))
       BigDecimal tanMinusCsc = tanValue.subtract(cscValue, mc);
       BigDecimal pow2 = powInt(tanMinusCsc, 2, mc);
       BigDecimal pow6 = powInt(pow2, 3, mc); // ((...)^2)^3
@@ -52,7 +90,6 @@ public class SystemFunction extends AbstractMathFunction {
 
       BigDecimal part1 = leftBracket.multiply(frac2, mc);
 
-      // ((cot*sin)*((cot*cot)+(cos-(cos/tan))))/tan
       BigDecimal cotMulCot = cotValue.multiply(cotValue, mc);
       BigDecimal cosDivTan = cosValue.divide(tanValue, mc);
       BigDecimal cosMinusCosDivTan = cosValue.subtract(cosDivTan, mc);
@@ -65,30 +102,23 @@ public class SystemFunction extends AbstractMathFunction {
       return roundToEps(resultValue, eps);
 
     } else {
-
-      BigDecimal lnValue    = lnFunction.calculate(x, internalEps);
-      BigDecimal log2Value  = log2Function.calculate(x, internalEps);
-      BigDecimal log5Value  = log5Function.calculate(x, internalEps);
+      BigDecimal lnValue = lnFunction.calculate(x, internalEps);
+      BigDecimal log2Value = log2Function.calculate(x, internalEps);
+      BigDecimal log5Value = log5Function.calculate(x, internalEps);
       BigDecimal log10Value = log10Function.calculate(x, internalEps);
-
-      // (((log2*ln)*(log2+log2)) / (log10/log10))
       BigDecimal log2MulLn = log2Value.multiply(lnValue, mc);
 
-      // (log2 + log2) 
       BigDecimal log2PlusLog2 = log2Value.add(log2Value, mc);
 
       BigDecimal numeratorA = log2MulLn.multiply(log2PlusLog2, mc);
 
-      // (log10/log10)
       BigDecimal denomA = log10Value.divide(log10Value, mc);
 
       BigDecimal partA = numeratorA.divide(denomA, mc);
 
-      // log10 + (log10 + log10) 
       BigDecimal log10PlusLog10 = log10Value.add(log10Value, mc);
       BigDecimal partB = log10Value.add(log10PlusLog10, mc);
 
-      // log5/ln
       BigDecimal partC = log5Value.divide(lnValue, mc);
 
       BigDecimal resultValue = partA.add(partB, mc).subtract(partC, mc);
