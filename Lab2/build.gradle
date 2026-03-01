@@ -10,19 +10,27 @@ repositories {
     mavenCentral()
 }
 
-dependencies {
-    // chưa cần test libs để chạy main
-    // testImplementation 'org.junit.jupiter:junit-jupiter:5.10.2'
-}
-
 application {
     mainClass = 'lab2.app.ExportCsvApp'
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.2'
+    testImplementation 'org.junit.jupiter:junit-jupiter-params:5.10.2'
+    testRuntimeOnly  'org.junit.jupiter:junit-jupiter-engine:5.10.2'
+    testRuntimeOnly  'org.junit.platform:junit-platform-launcher:1.10.2'
 }
 
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
 }
 
-tasks.withType(Test).configureEach {
+test {
     useJUnitPlatform()
+
+    testLogging {
+        events "passed", "skipped", "failed"
+        exceptionFormat "full"
+        showStandardStreams = true
+    }
 }
