@@ -20,14 +20,14 @@ class ArcSinSeriesTest {
     }
 
     @Test
-    @DisplayName("Invalid domain returns NaN (like Math.asin)")
+    @DisplayName("Invalid domain returns NaN")
     void invalidDomainReturnsNaN() {
         assertTrue(Double.isNaN(ArcSinSeries.asin(1.0001, EPS)));
         assertTrue(Double.isNaN(ArcSinSeries.asin(-1.5, EPS)));
     }
 
     @Test
-    @DisplayName("NaN/Infinity inputs return NaN (like Math.asin)")
+    @DisplayName("NaN/Infinity inputs return NaN")
     void nanAndInfinityReturnNaN() {
         assertTrue(Double.isNaN(ArcSinSeries.asin(Double.NaN, EPS)));
         assertTrue(Double.isNaN(ArcSinSeries.asin(Double.POSITIVE_INFINITY, EPS)));
@@ -44,7 +44,7 @@ class ArcSinSeriesTest {
     }
 
     @ParameterizedTest(name = "corner x = {0}")
-    @DisplayName("Corner & boundary values (compare to Math.asin; outside => NaN)")
+    @DisplayName("Corner & boundary values")
     @ValueSource(doubles = {
             -999.9,
             -1.0000001,
