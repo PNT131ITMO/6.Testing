@@ -10,8 +10,7 @@ class SplayTreeStatefulPropertyTest {
     Arbitrary<ActionSequence<World>> splaySequences() {
         Arbitrary<Integer> keys = Arbitraries.integers().between(-50, 50);
 
-        Arbitrary<Action<World>> actions =
-        Arbitraries.oneOf(
+        Arbitrary<Action<World>> actions = Arbitraries.oneOf(
             keys.map(InsertAction::new),
             keys.map(DeleteAction::new),
             keys.map(SearchAction::new),
@@ -29,6 +28,14 @@ class SplayTreeStatefulPropertyTest {
         @ForAll("splaySequences") ActionSequence<World> sequence
     ) {
         World w = new World();
-        sequence.run(w);
+        try {
+            sequence.run(w);
+        } catch (AssertionError | RuntimeException e) {
+            System.err.println("\nMinimal Failing Sequence:");
+            System.err.println(sequence);
+
+            FailureArtifacts.writeMinimalFailingSequence(sequence, e);
+            throw e;
+        }
     }
 }

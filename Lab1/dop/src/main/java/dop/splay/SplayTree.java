@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-
 public class SplayTree {
+
+    private static final boolean DEMO_BUG =
+    Boolean.parseBoolean(System.getProperty("demoBug", "false"));
 
     public static final class Node {
         public final int key;
@@ -104,7 +106,7 @@ public class SplayTree {
             root.right = right;
             if (right != null) right.parent = root;
         }
-        
+
         size--;
         return true;
     }
@@ -201,7 +203,12 @@ public class SplayTree {
         }
 
         y.left = x;
-        x.parent = y;
+
+        if (!DEMO_BUG) {
+            x.parent = y;
+        } else {
+            x.parent = null;
+        }
     }
 
     private void rotateRight(Node x) {
@@ -222,6 +229,7 @@ public class SplayTree {
         }
 
         y.right = x;
+
         x.parent = y;
     }
 }

@@ -21,6 +21,7 @@ test {
     testLogging {
         events "passed", "skipped", "failed"
     }
+    systemProperty "demoBug", System.getProperty("demoBug", "false")
 }
 
 application {
