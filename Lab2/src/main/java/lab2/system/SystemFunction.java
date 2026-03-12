@@ -23,18 +23,21 @@ public class SystemFunction extends AbstractMathFunction {
   private LogBaseFunction log10Function;
 
   public SystemFunction() {
-    this(
-        new SinFunction(),
-        new CosFunction(),
-        new TanFunction(),
-        new SecFunction(),
-        new CscFunction(),
-        new CotFunction(),
-        new LnFunction(),
-        new LogBaseFunction(2),
-        new LogBaseFunction(5),
-        new LogBaseFunction(10)
-    );
+    SinFunction baseSin = new SinFunction();
+    CosFunction baseCos = new CosFunction(baseSin);
+
+    this.sinFunction = baseSin;
+    this.cosFunction = baseCos;
+
+    this.tanFunction = new TanFunction(baseSin, baseCos);
+    this.cotFunction = new CotFunction(baseSin, baseCos);
+    this.secFunction = new SecFunction(baseCos);
+    this.cscFunction = new CscFunction(baseSin);
+
+    this.lnFunction = new LnFunction();
+    this.log2Function = new LogBaseFunction(2);
+    this.log5Function = new LogBaseFunction(5);
+    this.log10Function = new LogBaseFunction(10);
   }
 
   public SystemFunction(
@@ -79,7 +82,7 @@ public class SystemFunction extends AbstractMathFunction {
 
       BigDecimal tanMinusCsc = tanValue.subtract(cscValue, mc);
       BigDecimal pow2 = powInt(tanMinusCsc, 2, mc);
-      BigDecimal pow6 = powInt(pow2, 3, mc); // ((...)^2)^3
+      BigDecimal pow6 = powInt(pow2, 3, mc);
       BigDecimal leftBracket = pow6.subtract(cscValue, mc);
 
       BigDecimal cotMulSin = cotValue.multiply(sinValue, mc);
@@ -106,14 +109,12 @@ public class SystemFunction extends AbstractMathFunction {
       BigDecimal log2Value = log2Function.calculate(x, internalEps);
       BigDecimal log5Value = log5Function.calculate(x, internalEps);
       BigDecimal log10Value = log10Function.calculate(x, internalEps);
+
       BigDecimal log2MulLn = log2Value.multiply(lnValue, mc);
-
       BigDecimal log2PlusLog2 = log2Value.add(log2Value, mc);
-
       BigDecimal numeratorA = log2MulLn.multiply(log2PlusLog2, mc);
 
       BigDecimal denomA = log10Value.divide(log10Value, mc);
-
       BigDecimal partA = numeratorA.divide(denomA, mc);
 
       BigDecimal log10PlusLog10 = log10Value.add(log10Value, mc);
