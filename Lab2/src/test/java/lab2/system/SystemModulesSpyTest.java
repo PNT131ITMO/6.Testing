@@ -15,7 +15,7 @@ public class SystemModulesSpyTest {
   private static final BigDecimal EPS = new BigDecimal("0.000001");
 
   @Test
-  void whenXLessOrEqualZero_calls_trig_modules_not_log_modules() {
+  void whenXLessOrEqualZero_calls_trig_modules() {
     SinFunction sin = spy(new SinFunction());
     CosFunction cos = spy(new CosFunction(sin));
     TanFunction tan = spy(new TanFunction(sin, cos));
@@ -45,7 +45,7 @@ public class SystemModulesSpyTest {
   }
 
   @Test
-  void whenXGreaterZero_calls_log_modules_not_trig_modules() {
+  void whenXGreaterZero_calls_log_modules() {
     SinFunction sin = spy(new SinFunction());
     CosFunction cos = spy(new CosFunction(sin));
     TanFunction tan = spy(new TanFunction(sin, cos));
