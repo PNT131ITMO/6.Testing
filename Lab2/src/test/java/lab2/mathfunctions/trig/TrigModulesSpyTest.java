@@ -16,7 +16,7 @@ public class TrigModulesSpyTest {
   private static final BigDecimal EPS = new BigDecimal("0.000001");
 
   @Test
-  void cos_calls_sin_with_shifted_argument() {
+  void cos_calls_sin() {
     SinFunction realSin = new SinFunction();
     MathFunction sinSpy = spy(realSin);
 
