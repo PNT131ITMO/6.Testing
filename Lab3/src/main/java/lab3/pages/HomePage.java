@@ -9,7 +9,7 @@ public class HomePage extends BasePage {
     private static final String XPATH_LOGO =
             "//a[contains(@href,'/ru/') and (contains(normalize-space(.),'World of Tanks') or .//img)]";
     private static final String XPATH_LOGIN_BTN =
-            "//a[normalize-space()='Войти' or contains(@href,'auth/oid')]";
+        "(//a[normalize-space()='Войти' and contains(@href,'/auth/oid/')])[1]";
     private static final String XPATH_REGISTER_BTN =
             "//a[contains(normalize-space(.),'Зарегистрироваться') or contains(@href,'registration') or contains(@href,'red.wargaming.net')]";
     private static final String XPATH_NAV_NEWS =
@@ -51,7 +51,14 @@ public class HomePage extends BasePage {
     }
 
     public LoginPage clickLogin() {
-        clickByXPath(XPATH_LOGIN_BTN);
+        String oldUrl = driver.getCurrentUrl();
+
+        waitForXPath(XPATH_LOGIN_BTN);
+        scrollAndClick(XPATH_LOGIN_BTN);
+
+        wait.until(d -> !d.getCurrentUrl().equals(oldUrl));
+        wait.until(d -> d.getCurrentUrl().contains("/auth/oid/") || d.getCurrentUrl().contains("wargaming.net"));
+
         return new LoginPage(driver);
     }
 
