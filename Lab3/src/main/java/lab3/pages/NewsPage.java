@@ -4,23 +4,20 @@ import org.openqa.selenium.WebDriver;
 
 public class NewsPage extends BasePage {
 
-    public static final String URL = "https://worldoftanks.ru/ru/news/";
+    public static final String URL = "https://worldoftanks.eu/ru/news/";
 
     private static final String XPATH_PAGE_HEADER =
-            "//h1 | //h2[contains(translate(text(),'НОВОСТИ','новости'),'новости')]";
-    private static final String XPATH_NEWS_CARDS =
-            "//*[contains(@class,'news-item') or contains(@class,'article-item') or contains(@class,'card')]";
+            "//h1[contains(normalize-space(.),'НОВОСТИ')]";
+    private static final String XPATH_FILTER_BLOCK =
+            "//*[contains(normalize-space(.),'Фильтр') and contains(normalize-space(.),'Категории')] | //*[contains(normalize-space(.),'Категории')]";
     private static final String XPATH_FIRST_NEWS_LINK =
-            "(//*[contains(@class,'news-item') or contains(@class,'article-item') or contains(@class,'card')]//a)[1]";
-    private static final String XPATH_FIRST_NEWS_TITLE =
-            "(//*[contains(@class,'news-item') or contains(@class,'article-item')]//h2 | "
-          + "//*[contains(@class,'news-item')]//h3)[1]";
-    private static final String XPATH_LOAD_MORE_BTN =
-            "//button[contains(text(),'Показать ещё') or contains(text(),'Загрузить') or contains(@class,'load-more')]";
-    private static final String XPATH_PAGINATION =
-            "//*[contains(@class,'pagination')]";
+            "(//a[contains(@href,'/ru/news/') and string-length(normalize-space(.)) > 15 and not(contains(normalize-space(.),'Все новости')) and not(contains(normalize-space(.),'RSS'))])[1]";
+    private static final String XPATH_NEWS_CARDS =
+            XPATH_FIRST_NEWS_LINK;
     private static final String XPATH_ARTICLE_DATE =
-            "//*[contains(@class,'date') or @datetime]";
+            "//time | //*[@datetime] | //*[contains(@class,'date')]";
+    private static final String XPATH_RSS_LABEL =
+            "//*[contains(normalize-space(.),'RSS')]";
 
     public NewsPage(WebDriver driver) {
         super(driver);
@@ -28,6 +25,7 @@ public class NewsPage extends BasePage {
 
     public NewsPage open() {
         driver.get(URL);
+        waitForUrlContains("/ru/news/");
         return this;
     }
 
@@ -36,19 +34,9 @@ public class NewsPage extends BasePage {
         return new ArticlePage(driver);
     }
 
-    public NewsPage clickLoadMore() {
-        if (isVisibleByXPath(XPATH_LOAD_MORE_BTN)) {
-            clickByXPath(XPATH_LOAD_MORE_BTN);
-        }
-        return this;
-    }
-
-    public boolean isPageHeaderVisible()  { return isVisibleByXPath(XPATH_PAGE_HEADER); }
-    public boolean areNewsCardsVisible()  { return isVisibleByXPath(XPATH_NEWS_CARDS); }
-    public boolean isPaginationVisible()  { return isVisibleByXPath(XPATH_PAGINATION); }
-    public boolean isDateVisible()        { return isVisibleByXPath(XPATH_ARTICLE_DATE); }
-
-    public String getFirstNewsTitle() {
-        return getTextByXPath(XPATH_FIRST_NEWS_TITLE);
-    }
+    public boolean isPageHeaderVisible() { return isVisibleByXPath(XPATH_PAGE_HEADER); }
+    public boolean isFilterBlockVisible() { return isVisibleByXPath(XPATH_FILTER_BLOCK); }
+    public boolean areNewsCardsVisible() { return isVisibleByXPath(XPATH_NEWS_CARDS); }
+    public boolean isDateVisible() { return isVisibleByXPath(XPATH_ARTICLE_DATE); }
+    public boolean isRssLabelVisible() { return isVisibleByXPath(XPATH_RSS_LABEL); }
 }

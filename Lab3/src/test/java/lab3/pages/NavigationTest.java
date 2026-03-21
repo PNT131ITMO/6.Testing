@@ -9,62 +9,64 @@ import static org.junit.jupiter.api.Assertions.*;
 class NavigationTest extends BaseTest {
 
     @Test
-    @DisplayName("TC-24: Clicking News navigates to the news page")
+    @DisplayName("TC-29: Clicking News navigates to the news page")
     void testNavigateToNews() {
         HomePage home = new HomePage(driver).open().acceptCookieIfPresent();
-        home.clickNavNews();
-        String url = driver.getCurrentUrl();
-        assertTrue(url.contains("news") || url.contains("новости"),
-                "Must navigate to the news page. Actual URL: " + url);
+        NewsPage newsPage = home.clickNavNews();
+        assertTrue(newsPage.getCurrentUrl().contains("/ru/news/"),
+                "Must navigate to the news page. Actual URL: " + newsPage.getCurrentUrl());
     }
 
     @Test
-    @DisplayName("TC-25: Clicking Game navigates to the game info page")
+    @DisplayName("TC-30: Clicking Game navigates to the game page")
     void testNavigateToGame() {
         HomePage home = new HomePage(driver).open().acceptCookieIfPresent();
-        home.clickNavGame();
-        String url = driver.getCurrentUrl();
-        assertTrue(url.contains("game") || url.contains("игра") || url.contains("content"),
-                "Must navigate to the game page. Actual URL: " + url);
+        GameInfoPage gamePage = home.clickNavGame();
+        assertTrue(gamePage.getCurrentUrl().contains("/ru/game/"),
+                "Must navigate to the game page. Actual URL: " + gamePage.getCurrentUrl());
     }
 
     @Test
-    @DisplayName("TC-26: Clicking Media navigates to the media page")
+    @DisplayName("TC-31: Clicking Media navigates to the media page")
     void testNavigateToMedia() {
         HomePage home = new HomePage(driver).open().acceptCookieIfPresent();
         home.clickNavMedia();
         String url = driver.getCurrentUrl();
-        assertTrue(url.contains("media") || url.contains("медиа"),
+        assertTrue(url.contains("/ru/media/") || url.contains("media"),
                 "Must navigate to the media page. Actual URL: " + url);
     }
 
     @Test
-    @DisplayName("TC-27: Clicking Community navigates to the community page")
+    @DisplayName("TC-32: Clicking Community navigates to the community area")
     void testNavigateToCommunity() {
         HomePage home = new HomePage(driver).open().acceptCookieIfPresent();
         home.clickNavCommunity();
         String url = driver.getCurrentUrl();
-        assertTrue(url.contains("community") || url.contains("сообщество") || url.contains("clan"),
-                "Must navigate to the community page. Actual URL: " + url);
+        assertTrue(url.contains("/ru/community/") || url.contains("community"),
+                "Must navigate to the community area. Actual URL: " + url);
     }
 
     @Test
-    @DisplayName("TC-28: Browser back button returns to the previous page")
+    @DisplayName("TC-33: Browser back button returns to the RU home page")
     void testBrowserBackNavigation() {
         HomePage home = new HomePage(driver).open().acceptCookieIfPresent();
         home.clickNavNews();
         driver.navigate().back();
-        assertTrue(driver.getCurrentUrl().contains("worldoftanks.ru"),
-                "Back button must return to the previous page");
+        String url = driver.getCurrentUrl();
+        assertTrue(url.contains("worldoftanks.eu/ru/") || url.contains("worldoftanks.ru"),
+                "Back button must return to the RU home page. Actual URL: " + url);
     }
 
     @Test
-    @DisplayName("TC-29: Every tested page has a non-empty title")
+    @DisplayName("TC-34: Tested pages have non-empty titles")
     void testPageTitlesNotEmpty() {
         String[] urls = {
-            "https://worldoftanks.ru/",
-            "https://worldoftanks.ru/ru/news/",
+                "https://worldoftanks.eu/ru/",
+                "https://worldoftanks.eu/ru/news/",
+                "https://worldoftanks.eu/ru/game/",
+                "https://worldoftanks.eu/ru/community/accounts/"
         };
+
         for (String url : urls) {
             driver.get(url);
             assertFalse(driver.getTitle().isEmpty(),

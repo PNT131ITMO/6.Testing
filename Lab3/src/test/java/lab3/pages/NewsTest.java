@@ -9,15 +9,33 @@ import static org.junit.jupiter.api.Assertions.*;
 class NewsTest extends BaseTest {
 
     @Test
-    @DisplayName("TC-30: News page loads successfully")
+    @DisplayName("TC-18: News page loads successfully")
     void testNewsPageLoads() {
-        new NewsPage(driver).open();
-        assertTrue(driver.getCurrentUrl().contains("worldoftanks"),
-                "News page must load successfully");
+        NewsPage newsPage = new NewsPage(driver).open();
+        assertTrue(newsPage.getCurrentUrl().contains("/ru/news/"),
+                "News page must load successfully. URL: " + newsPage.getCurrentUrl());
     }
 
     @Test
-    @DisplayName("TC-31: News cards are displayed on the listing page")
+    @DisplayName("TC-19: News page header and RSS label are visible")
+    void testNewsHeaderVisible() {
+        NewsPage newsPage = new NewsPage(driver).open();
+        assertAll(
+                () -> assertTrue(newsPage.isPageHeaderVisible(), "News header must be visible"),
+                () -> assertTrue(newsPage.isRssLabelVisible(), "RSS label must be visible")
+        );
+    }
+
+    @Test
+    @DisplayName("TC-20: Filter block is visible on the news page")
+    void testFilterBlockVisible() {
+        NewsPage newsPage = new NewsPage(driver).open();
+        assertTrue(newsPage.isFilterBlockVisible(),
+                "Filter block must be visible on the news page");
+    }
+
+    @Test
+    @DisplayName("TC-21: News cards are displayed on the listing page")
     void testNewsCardsVisible() {
         NewsPage newsPage = new NewsPage(driver).open();
         assertTrue(newsPage.areNewsCardsVisible(),
@@ -25,48 +43,22 @@ class NewsTest extends BaseTest {
     }
 
     @Test
-    @DisplayName("TC-32: Clicking the first news card opens the article detail page")
+    @DisplayName("TC-22: Clicking the first news card opens the article detail page")
     void testClickFirstArticle() {
         NewsPage newsPage = new NewsPage(driver).open();
-        if (newsPage.areNewsCardsVisible()) {
-            ArticlePage articlePage = newsPage.clickFirstNews();
-            assertTrue(articlePage.isArticleTitleVisible() || articlePage.isArticleBodyVisible(),
-                    "The article page must have a title or body content");
-        }
+        ArticlePage articlePage = newsPage.clickFirstNews();
+        assertAll(
+                () -> assertTrue(articlePage.isArticleTitleVisible(), "The article page must have a title"),
+                () -> assertTrue(articlePage.isArticleBodyVisible(), "The article page must have body content")
+        );
     }
 
     @Test
-    @DisplayName("TC-33: Article title is not empty")
-    void testArticleTitleNotEmpty() {
+    @DisplayName("TC-23: Article detail page shows a publish date or breadcrumb")
+    void testArticleMetadataVisible() {
         NewsPage newsPage = new NewsPage(driver).open();
-        if (newsPage.areNewsCardsVisible()) {
-            ArticlePage articlePage = newsPage.clickFirstNews();
-            if (articlePage.isArticleTitleVisible()) {
-                assertFalse(articlePage.getArticleTitle().isEmpty(),
-                        "Article title must not be empty");
-            }
-        }
-    }
-
-    @Test
-    @DisplayName("TC-34: Article detail page shows a publish date")
-    void testArticleHasPublishDate() {
-        NewsPage newsPage = new NewsPage(driver).open();
-        if (newsPage.areNewsCardsVisible()) {
-            ArticlePage articlePage = newsPage.clickFirstNews();
-            assertTrue(articlePage.isPublishDateVisible() || articlePage.isArticleBodyVisible(),
-                    "Article must have a publish date or body content");
-        }
-    }
-
-    @Test
-    @DisplayName("TC-35: Article detail page shows a breadcrumb")
-    void testArticleBreadcrumb() {
-        NewsPage newsPage = new NewsPage(driver).open();
-        if (newsPage.areNewsCardsVisible()) {
-            ArticlePage articlePage = newsPage.clickFirstNews();
-            assertTrue(articlePage.isBreadcrumbVisible() || articlePage.isArticleTitleVisible(),
-                    "Article page must have a breadcrumb or a title");
-        }
+        ArticlePage articlePage = newsPage.clickFirstNews();
+        assertTrue(articlePage.isPublishDateVisible() || articlePage.isBreadcrumbVisible(),
+                "Article page must have a publish date or breadcrumb");
     }
 }

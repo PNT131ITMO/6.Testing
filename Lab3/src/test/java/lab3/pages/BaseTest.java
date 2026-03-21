@@ -1,7 +1,6 @@
 package lab3.pages;
 
 import lab3.DriverFactory;
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.WebDriver;
@@ -17,8 +16,8 @@ public abstract class BaseTest {
     @BeforeEach
     void setUp() {
         driver = DriverFactory.createEdgeDriver(HEADLESS);
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
-        driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(30));
+        driver.manage().timeouts().implicitlyWait(Duration.ZERO);
+        driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(40));
         driver.manage().window().maximize();
     }
 

@@ -4,21 +4,31 @@ import org.openqa.selenium.WebDriver;
 
 public class SearchPage extends BasePage {
 
+    public static final String URL = "https://worldoftanks.eu/ru/community/accounts/";
+
+    private static final String XPATH_PAGE_HEADER =
+            "//h1[contains(normalize-space(.),'Игроки') or contains(normalize-space(.),'Статистика игроков')]";
     private static final String XPATH_SEARCH_INPUT =
-            "//input[@type='search' or @name='q' or @name='query' or contains(@class,'search') and @type='text']";
+            "(//input[not(@type='hidden') and not(@type='checkbox') and not(@type='submit')])[1]";
     private static final String XPATH_SEARCH_SUBMIT =
-            "//button[@type='submit' and (contains(@class,'search') or ancestor::*[contains(@class,'search')])]"
-          + " | //input[@type='submit' and ancestor::*[contains(@class,'search')]]";
-    private static final String XPATH_SEARCH_RESULTS =
-            "//*[contains(@class,'search-result') or contains(@class,'search-item') or contains(@class,'result-item')]";
-    private static final String XPATH_RESULT_TITLES =
-            "//*[contains(@class,'search-result')]//h2 | //*[contains(@class,'search-result')]//h3"
-          + " | //*[contains(@class,'result-item')]//a";
+            "//button[normalize-space()='Поиск'] | //input[@type='submit' and (@value='Поиск' or @value='Search')]";
+    private static final String XPATH_MIN_CHARS_HINT =
+            "//*[contains(normalize-space(.),'Минимальное количество символов для поиска: 3')]";
     private static final String XPATH_NO_RESULTS =
-            "//*[contains(text(),'не найдено') or contains(text(),'ничего не найдено') or contains(text(),'No results')]";
+            "//*[contains(normalize-space(.),'ничего не найдено')]";
+    private static final String XPATH_RESULTS_TABLE =
+            "//*[contains(normalize-space(.),'Имя') and contains(normalize-space(.),'Бои') and contains(normalize-space(.),'Победы')]";
+    private static final String XPATH_CLEAR_BTN =
+            "//*[normalize-space()='Очистить']";
 
     public SearchPage(WebDriver driver) {
         super(driver);
+    }
+
+    public SearchPage open() {
+        driver.get(URL);
+        waitForUrlContains("/community/accounts/");
+        return this;
     }
 
     public SearchPage typeQuery(String query) {
@@ -27,7 +37,9 @@ public class SearchPage extends BasePage {
     }
 
     public SearchPage submitSearch() {
-        clickByXPath(XPATH_SEARCH_SUBMIT);
+        if (isClickableByXPath(XPATH_SEARCH_SUBMIT)) {
+            clickByXPath(XPATH_SEARCH_SUBMIT);
+        }
         return this;
     }
 
@@ -37,11 +49,10 @@ public class SearchPage extends BasePage {
         return this;
     }
 
-    public String getFirstResultTitle() {
-        return getTextByXPath(XPATH_RESULT_TITLES);
-    }
-
-    public boolean hasResults()          { return isVisibleByXPath(XPATH_SEARCH_RESULTS); }
+    public boolean isPageHeaderVisible() { return isVisibleByXPath(XPATH_PAGE_HEADER); }
+    public boolean isSearchInputVisible() { return isVisibleByXPath(XPATH_SEARCH_INPUT); }
+    public boolean isMinCharsHintVisible() { return isVisibleByXPath(XPATH_MIN_CHARS_HINT); }
     public boolean hasNoResultsMessage() { return isVisibleByXPath(XPATH_NO_RESULTS); }
-    public boolean isSearchInputVisible(){ return isVisibleByXPath(XPATH_SEARCH_INPUT); }
+    public boolean hasResultsTable() { return isVisibleByXPath(XPATH_RESULTS_TABLE); }
+    public boolean isClearButtonVisible() { return isVisibleByXPath(XPATH_CLEAR_BTN); }
 }

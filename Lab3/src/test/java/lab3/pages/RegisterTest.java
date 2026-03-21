@@ -5,11 +5,11 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@DisplayName("UC-03: Account Registration Functionality")
+@DisplayName("UC-03: Registration Entry Point")
 class RegisterTest extends BaseTest {
 
     @Test
-    @DisplayName("TC-14: Clicking Register navigates to the registration page")
+    @DisplayName("TC-13: Clicking Register navigates to the Wargaming registration page")
     void testNavigateToRegisterPage() {
         RegisterPage registerPage = new HomePage(driver).open()
                 .acceptCookieIfPresent()
@@ -19,58 +19,45 @@ class RegisterTest extends BaseTest {
     }
 
     @Test
-    @DisplayName("TC-15: Registration page has a form header")
-    void testRegisterPageHasHeader() {
-        new HomePage(driver).open().acceptCookieIfPresent().clickRegister();
-        RegisterPage page = new RegisterPage(driver);
-        assertTrue(page.isFormHeaderVisible() || page.isOnRegisterPage(),
-                "Registration page must have a visible form header");
+    @DisplayName("TC-14: Registration page URL belongs to the Wargaming registration domain")
+    void testRegisterPageUrl() {
+        RegisterPage registerPage = new HomePage(driver).open()
+                .acceptCookieIfPresent()
+                .clickRegister();
+        String url = registerPage.getCurrentUrl();
+        assertTrue(url.contains("registration") || url.contains("wargaming.net"),
+                "Registration page must open on Wargaming registration. Actual URL: " + url);
     }
 
     @Test
-    @DisplayName("TC-16: Registering with an existing email — error is shown")
-    void testRegisterWithExistingEmail() {
-        RegisterPage page = new HomePage(driver).open()
+    @DisplayName("TC-15: Registration page title is not empty")
+    void testRegisterPageTitleNotEmpty() {
+        RegisterPage registerPage = new HomePage(driver).open()
                 .acceptCookieIfPresent()
                 .clickRegister();
-        if (page.isOnRegisterPage()) {
-            page.enterNickname("TestNick" + System.currentTimeMillis())
-                .enterEmail("existing_test_account@wargaming.net")
-                .enterPassword("TestPass123!")
-                .enterPasswordConfirm("TestPass123!")
-                .clickSubmit();
-            assertTrue(page.isErrorDisplayed() || page.isOnRegisterPage(),
-                    "Must show an error or reject registration for an already-used email");
-        }
+        assertFalse(registerPage.getPageTitle().isEmpty(),
+                "Registration page title must not be empty");
     }
 
     @Test
-    @DisplayName("TC-17: Mismatched password confirmation — error is shown")
-    void testRegisterPasswordMismatch() {
-        RegisterPage page = new HomePage(driver).open()
+    @DisplayName("TC-16: Registration page renders email/password controls or submit button")
+    void testRegisterFormElements() {
+        RegisterPage registerPage = new HomePage(driver).open()
                 .acceptCookieIfPresent()
                 .clickRegister();
-        if (page.isOnRegisterPage()) {
-            page.enterNickname("TankPlayer" + System.currentTimeMillis())
-                .enterEmail("new_user_" + System.currentTimeMillis() + "@test.com")
-                .enterPassword("Password123!")
-                .enterPasswordConfirm("DifferentPassword!")
-                .clickSubmit();
-            assertTrue(page.isErrorDisplayed() || page.isOnRegisterPage(),
-                    "Must show an error when the password confirmation does not match");
-        }
+        assertTrue(registerPage.isEmailInputVisible() || registerPage.isPasswordInputVisible() || registerPage.isSubmitButtonVisible(),
+                "Registration controls must be rendered");
     }
 
     @Test
-    @DisplayName("TC-18: Submitting an empty form — validation errors are shown")
-    void testRegisterWithEmptyForm() {
-        RegisterPage page = new HomePage(driver).open()
+    @DisplayName("TC-17: Registration page shows legal links")
+    void testRegisterPageLegalLinks() {
+        RegisterPage registerPage = new HomePage(driver).open()
                 .acceptCookieIfPresent()
                 .clickRegister();
-        if (page.isOnRegisterPage()) {
-            page.clickSubmit();
-            assertTrue(page.isErrorDisplayed() || page.isOnRegisterPage(),
-                    "Must show validation errors when the form is submitted empty");
-        }
+        assertAll(
+                () -> assertTrue(registerPage.isEulaLinkVisible(), "EULA link must be visible"),
+                () -> assertTrue(registerPage.isPrivacyLinkVisible(), "Privacy Policy link must be visible")
+        );
     }
 }

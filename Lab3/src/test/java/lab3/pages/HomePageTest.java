@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@DisplayName("UC-01: worldoftanks.ru Home Page")
+@DisplayName("UC-01: World of Tanks Home Page")
 class HomePageTest extends BaseTest {
 
     @Test
@@ -18,12 +18,12 @@ class HomePageTest extends BaseTest {
     }
 
     @Test
-    @DisplayName("TC-02: Home page URL contains worldoftanks.ru")
+    @DisplayName("TC-02: Home page opens on the EU RU portal")
     void testHomePageUrl() {
-        new HomePage(driver).open();
-        String url = driver.getCurrentUrl();
-        assertTrue(url.contains("worldoftanks.ru"),
-                "URL must contain 'worldoftanks.ru', actual: " + url);
+        HomePage home = new HomePage(driver).open();
+        String url = home.getCurrentUrl();
+        assertTrue(url.contains("worldoftanks.eu/ru/") || url.contains("worldoftanks.ru"),
+                "URL must open the RU portal, actual: " + url);
     }
 
     @Test
@@ -34,10 +34,13 @@ class HomePageTest extends BaseTest {
     }
 
     @Test
-    @DisplayName("TC-04: Login button (Войти) is visible")
-    void testLoginButtonVisible() {
+    @DisplayName("TC-04: Login and Register buttons are visible")
+    void testAuthButtonsVisible() {
         HomePage home = new HomePage(driver).open().acceptCookieIfPresent();
-        assertTrue(home.isLoginBtnVisible(), "Login button must be visible");
+        assertAll(
+                () -> assertTrue(home.isLoginBtnVisible(), "Login button must be visible"),
+                () -> assertTrue(home.isRegisterBtnVisible(), "Register button must be visible")
+        );
     }
 
     @Test
@@ -48,16 +51,19 @@ class HomePageTest extends BaseTest {
     }
 
     @Test
-    @DisplayName("TC-06: Footer is visible at the bottom of the page")
-    void testFooterVisible() {
+    @DisplayName("TC-06: News preview block is visible on the home page")
+    void testNewsBlockVisible() {
         HomePage home = new HomePage(driver).open().acceptCookieIfPresent();
-        assertTrue(home.isFooterVisible(), "Footer must be visible");
+        assertTrue(home.isNewsBlockVisible(), "News preview block must be visible");
     }
 
     @Test
-    @DisplayName("TC-07: News menu item is visible in the navigation bar")
-    void testNavNewsVisible() {
+    @DisplayName("TC-07: Footer and region selector are visible")
+    void testFooterAndRegionBlockVisible() {
         HomePage home = new HomePage(driver).open().acceptCookieIfPresent();
-        assertTrue(home.isNavNewsVisible(), "'News' item must be visible in the nav bar");
+        assertAll(
+                () -> assertTrue(home.isFooterVisible(), "Footer must be visible"),
+                () -> assertTrue(home.isRegionBlockVisible(), "Region selector block must be visible")
+        );
     }
 }
