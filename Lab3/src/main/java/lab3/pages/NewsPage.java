@@ -44,24 +44,28 @@ public class NewsPage extends BasePage {
     }
 
     public ArticlePage clickFirstNews() {
-        wait.until(d -> !d.findElements(By.xpath(XPATH_NEWS_CARD_LINKS)).isEmpty());
+    wait.until(d -> !d.findElements(By.xpath(XPATH_NEWS_CARD_LINKS)).isEmpty());
 
-        List<WebElement> links = driver.findElements(By.xpath(XPATH_NEWS_CARD_LINKS));
+    String oldUrl = driver.getCurrentUrl();
+    List<WebElement> links = driver.findElements(By.xpath(XPATH_NEWS_CARD_LINKS));
 
-        for (WebElement link : links) {
-            try {
-                if (link.isDisplayed()) {
-                    ((JavascriptExecutor) driver).executeScript(
-                            "arguments[0].scrollIntoView({block: 'center'});", link);
-                    ((JavascriptExecutor) driver).executeScript("arguments[0].click();", link);
-                    return new ArticlePage(driver);
-                }
-            } catch (StaleElementReferenceException ignored) {
+    for (WebElement link : links) {
+        try {
+            if (link.isDisplayed()) {
+                ((JavascriptExecutor) driver).executeScript(
+                        "arguments[0].scrollIntoView({block: 'center'});", link);
+                ((JavascriptExecutor) driver).executeScript("arguments[0].click();", link);
+
+                wait.until(d -> !d.getCurrentUrl().equals(oldUrl));
+                wait.until(d -> d.getCurrentUrl().contains("/ru/news/"));
+                return new ArticlePage(driver);
             }
+        } catch (StaleElementReferenceException ignored) {
         }
-
-        throw new NoSuchElementException("No visible news card link found on News page.");
     }
+
+    throw new NoSuchElementException("No visible news card link found on News page.");
+}
 
     public boolean isPageHeaderVisible() {
         return isVisibleByXPath(XPATH_PAGE_HEADER);

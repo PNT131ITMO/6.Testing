@@ -47,9 +47,14 @@ class NewsTest extends BaseTest {
     void testClickFirstArticle() {
         NewsPage newsPage = new NewsPage(driver).open();
         ArticlePage articlePage = newsPage.clickFirstNews();
+
+        System.out.println("Article URL: " + driver.getCurrentUrl());
+        System.out.println("Article title visible: " + articlePage.isArticleTitleVisible());
+        System.out.println("Article body visible: " + articlePage.isArticleBodyVisible());
+
         assertAll(
-                () -> assertTrue(articlePage.isArticleTitleVisible(), "The article page must have a title"),
-                () -> assertTrue(articlePage.isArticleBodyVisible(), "The article page must have body content")
+            () -> assertTrue(articlePage.isArticleTitleVisible(), "The article page must have a title"),
+            () -> assertTrue(articlePage.isArticleBodyVisible(), "The article page must have body content")
         );
     }
 
