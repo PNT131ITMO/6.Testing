@@ -4,7 +4,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.List;
 
@@ -13,27 +12,26 @@ public class GuideArticlePage extends BasePage {
     private static final String XPATH_BREADCRUMB =
             "//a[normalize-space()='Главная'] | //a[contains(@href,'/content/guide/')]";
 
-    private static final String XPATH_ARTICLE_TITLE =
-            "(//a[contains(@href,'/content/guide/') or normalize-space()='Руководства']/following::h1[1])[1]";
+    private static final String XPATH_ARTICLE_TITLES =
+            "//h1[string-length(normalize-space(.)) > 5]";
 
     private static final String XPATH_ARTICLE_BODY =
-            "(" + XPATH_ARTICLE_TITLE + ")/following::*[" +
-            "(self::p or self::div or self::section or self::li or self::h2 or self::h3)" +
-            " and string-length(normalize-space(.)) > 35" +
+            "(//h1[string-length(normalize-space(.)) > 5])[1]/following::*[" +
+            "(self::p or self::div or self::section or self::li or self::span or self::h2 or self::h3)" +
+            " and string-length(normalize-space(.)) > 40" +
             "][1]";
 
     private static final String XPATH_FIRST_SUBSECTION =
-            "(" + XPATH_ARTICLE_TITLE + ")/following::*[" +
+            "(//h1[string-length(normalize-space(.)) > 5])[1]/following::*[" +
             "(self::h2 or self::h3) and string-length(normalize-space(.)) > 2" +
             "][1]";
 
     public GuideArticlePage(WebDriver driver) {
         super(driver);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(XPATH_BREADCRUMB)));
     }
 
     public boolean isArticleTitleVisible() {
-        List<WebElement> titles = driver.findElements(By.xpath(XPATH_ARTICLE_TITLE));
+        List<WebElement> titles = driver.findElements(By.xpath(XPATH_ARTICLE_TITLES));
         for (WebElement title : titles) {
             try {
                 if (title.isDisplayed() && !title.getText().trim().isEmpty()) {
@@ -58,7 +56,7 @@ public class GuideArticlePage extends BasePage {
     }
 
     public String getArticleTitle() {
-        List<WebElement> titles = driver.findElements(By.xpath(XPATH_ARTICLE_TITLE));
+        List<WebElement> titles = driver.findElements(By.xpath(XPATH_ARTICLE_TITLES));
         for (WebElement title : titles) {
             try {
                 if (title.isDisplayed()) {
