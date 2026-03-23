@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@DisplayName("UC-07: Game Information Page")
+@DisplayName("UC-04: Game Information Page")
 class GameInfoTest extends BaseTest {
 
     @Test

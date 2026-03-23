@@ -4,44 +4,38 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.List;
 
 public class ArticlePage extends BasePage {
 
-    // Title thật nằm ngay sau breadcrumb/news navigation
-    private static final String XPATH_ARTICLE_TITLE =
-            "(//a[normalize-space()='Главная']/following::h1[1])[1]";
+    private static final String XPATH_ARTICLE_TITLES =
+            "//h1[string-length(normalize-space(.)) > 8]";
 
-    private static final String XPATH_BREADCRUMB =
-            "//a[normalize-space()='Главная'] | //a[contains(@href,'/ru/news/')]";
-
-    private static final String XPATH_PUBLISH_DATE =
-            "//time | //*[@datetime] | //*[contains(@class,'date')]";
-
-    // Nội dung đầu tiên đủ dài sau title
     private static final String XPATH_ARTICLE_BODY =
-            "(" + XPATH_ARTICLE_TITLE + ")/following::*[" +
-            "(self::p or self::div or self::section or self::span or self::h2 or self::h3)" +
-            " and string-length(normalize-space(.)) > 25" +
+            "(//h1[string-length(normalize-space(.)) > 8])[1]/following::*[" +
+            "(self::p or self::div or self::section or self::span or self::h2 or self::h3 or self::h4)" +
+            " and string-length(normalize-space(.)) > 40" +
             "][1]";
 
-    private static final String XPATH_BACK_TO_NEWS =
-            "//a[contains(normalize-space(.),'Все новости') or contains(@href,'/ru/news/')]";
+    private static final String XPATH_PUBLISH_DATE =
+            "//*[contains(normalize-space(.),'Дата и время')] | //time | //*[@datetime]";
+
+    private static final String XPATH_FIRST_SECTION =
+            "(//h1[string-length(normalize-space(.)) > 8])[1]/following::*[" +
+            "(self::h2 or self::h3 or self::h4)" +
+            " and string-length(normalize-space(.)) > 3" +
+            "][1]";
+
+    private static final String XPATH_NEWS_LINK =
+            "//a[contains(@href,'/ru/news/')]";
 
     public ArticlePage(WebDriver driver) {
         super(driver);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(XPATH_BREADCRUMB)));
-    }
-
-    public NewsPage clickBackToNews() {
-        clickByXPath(XPATH_BACK_TO_NEWS);
-        return new NewsPage(driver);
     }
 
     public boolean isArticleTitleVisible() {
-        List<WebElement> titles = driver.findElements(By.xpath(XPATH_ARTICLE_TITLE));
+        List<WebElement> titles = driver.findElements(By.xpath(XPATH_ARTICLE_TITLES));
         for (WebElement title : titles) {
             try {
                 if (title.isDisplayed() && !title.getText().trim().isEmpty()) {
@@ -62,11 +56,15 @@ public class ArticlePage extends BasePage {
     }
 
     public boolean isBreadcrumbVisible() {
-        return isVisibleByXPath(XPATH_BREADCRUMB);
+        return isVisibleByXPath(XPATH_NEWS_LINK);
+    }
+
+    public boolean isSectionVisible() {
+        return isVisibleByXPath(XPATH_FIRST_SECTION);
     }
 
     public String getArticleTitle() {
-        List<WebElement> titles = driver.findElements(By.xpath(XPATH_ARTICLE_TITLE));
+        List<WebElement> titles = driver.findElements(By.xpath(XPATH_ARTICLE_TITLES));
         for (WebElement title : titles) {
             try {
                 if (title.isDisplayed()) {

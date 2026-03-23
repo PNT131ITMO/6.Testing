@@ -5,11 +5,11 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@DisplayName("UC-04: Player Search")
+@DisplayName("UC-05: Player Search")
 class SearchTest extends BaseTest {
 
     @Test
-    @DisplayName("TC-35: Player search page loads successfully")
+    @DisplayName("TC-29: Player search page loads successfully")
     void testSearchPageLoads() {
         SearchPage searchPage = new SearchPage(driver).open();
         assertTrue(searchPage.getCurrentUrl().contains("/community/accounts/"),
@@ -17,7 +17,7 @@ class SearchTest extends BaseTest {
     }
 
     @Test
-    @DisplayName("TC-36: Search header and input are visible")
+    @DisplayName("TC-30: Search header and input are visible")
     void testSearchInputVisible() {
         SearchPage searchPage = new SearchPage(driver).open();
         assertAll(
@@ -27,7 +27,7 @@ class SearchTest extends BaseTest {
     }
 
     @Test
-    @DisplayName("TC-37: Minimum character hint is displayed")
+    @DisplayName("TC-31: Minimum character hint is displayed")
     void testMinCharacterHintVisible() {
         SearchPage searchPage = new SearchPage(driver).open();
         assertTrue(searchPage.isMinCharsHintVisible(),
@@ -35,7 +35,7 @@ class SearchTest extends BaseTest {
     }
 
     @Test
-    @DisplayName("TC-38: Search page shows result table headers")
+    @DisplayName("TC-32: Search page shows result table headers")
     void testResultsTableVisible() {
         SearchPage searchPage = new SearchPage(driver).open();
         assertTrue(searchPage.hasResultsTable(),
@@ -43,7 +43,7 @@ class SearchTest extends BaseTest {
     }
 
     @Test
-    @DisplayName("TC-39: Searching a non-existent player shows a no-results message")
+    @DisplayName("TC-33: Searching a non-existent player shows a no-results message")
     void testSearchNoResults() {
         SearchPage searchPage = new SearchPage(driver).open();
         searchPage.search("xyzabcnonexistent12345");
@@ -52,7 +52,7 @@ class SearchTest extends BaseTest {
     }
 
     @Test
-    @DisplayName("TC-40: Clear control is visible on the player search page")
+    @DisplayName("TC-34: Clear control is visible on the player search page")
     void testClearButtonVisible() {
         SearchPage searchPage = new SearchPage(driver).open();
         assertTrue(searchPage.isClearButtonVisible(),

@@ -5,11 +5,11 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@DisplayName("UC-03: Registration Entry Point")
+@DisplayName("UC-11: Registration Entry Point")
 class RegisterTest extends BaseTest {
 
     @Test
-    @DisplayName("TC-13: Clicking Register navigates to the Wargaming registration page")
+    @DisplayName("TC-61: Clicking Register navigates to the Wargaming registration page")
     void testNavigateToRegisterPage() {
         RegisterPage registerPage = new HomePage(driver).open()
                 .acceptCookieIfPresent()
@@ -19,7 +19,7 @@ class RegisterTest extends BaseTest {
     }
 
     @Test
-    @DisplayName("TC-14: Registration page URL belongs to the Wargaming registration domain")
+    @DisplayName("TC-62: Registration page URL belongs to the Wargaming registration domain")
     void testRegisterPageUrl() {
         RegisterPage registerPage = new HomePage(driver).open()
                 .acceptCookieIfPresent()
@@ -30,7 +30,7 @@ class RegisterTest extends BaseTest {
     }
 
     @Test
-    @DisplayName("TC-15: Registration page title is not empty")
+    @DisplayName("TC-63: Registration page title is not empty")
     void testRegisterPageTitleNotEmpty() {
         RegisterPage registerPage = new HomePage(driver).open()
                 .acceptCookieIfPresent()
@@ -40,7 +40,7 @@ class RegisterTest extends BaseTest {
     }
 
     @Test
-    @DisplayName("TC-16: Registration page renders email/password controls or submit button")
+    @DisplayName("TC-64: Registration page renders email/password controls or submit button")
     void testRegisterFormElements() {
         RegisterPage registerPage = new HomePage(driver).open()
                 .acceptCookieIfPresent()
@@ -50,7 +50,7 @@ class RegisterTest extends BaseTest {
     }
 
     @Test
-    @DisplayName("TC-17: Registration page shows legal links")
+    @DisplayName("TC-65: Registration page shows legal links")
     void testRegisterPageLegalLinks() {
         RegisterPage registerPage = new HomePage(driver).open()
                 .acceptCookieIfPresent()

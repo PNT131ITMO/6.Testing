@@ -5,11 +5,11 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@DisplayName("UC-02: Login Entry Point")
+@DisplayName("UC-10: Login Entry Point")
 class LoginTest extends BaseTest {
 
     @Test
-    @DisplayName("TC-08: Clicking Login navigates to the Wargaming auth page")
+    @DisplayName("TC-56: Clicking Login navigates to the Wargaming auth page")
     void testNavigateToLoginPage() {
         HomePage home = new HomePage(driver).open().acceptCookieIfPresent();
         LoginPage loginPage = home.clickLogin();
@@ -18,7 +18,7 @@ class LoginTest extends BaseTest {
     }
 
     @Test
-    @DisplayName("TC-09: Login page URL belongs to the Wargaming auth domain")
+    @DisplayName("TC-57: Login page URL belongs to the Wargaming auth domain")
     void testLoginPageUrl() {
         LoginPage loginPage = new HomePage(driver).open()
                 .acceptCookieIfPresent()
@@ -29,7 +29,7 @@ class LoginTest extends BaseTest {
     }
 
     @Test
-    @DisplayName("TC-10: Login page title is not empty")
+    @DisplayName("TC-58: Login page title is not empty")
     void testLoginPageTitleNotEmpty() {
         LoginPage loginPage = new HomePage(driver).open()
                 .acceptCookieIfPresent()
@@ -39,7 +39,7 @@ class LoginTest extends BaseTest {
     }
 
     @Test
-    @DisplayName("TC-11: Login page renders auth controls or at least the submit button")
+    @DisplayName("TC-59: Login page renders auth controls or at least the submit button")
     void testLoginFormElements() {
         LoginPage loginPage = new HomePage(driver).open()
                 .acceptCookieIfPresent()
@@ -49,7 +49,7 @@ class LoginTest extends BaseTest {
     }
 
     @Test
-    @DisplayName("TC-12: Login page contains recovery or legal navigation links")
+    @DisplayName("TC-60: Login page contains recovery or legal navigation links")
     void testLoginPageSupportLinks() {
         LoginPage loginPage = new HomePage(driver).open()
                 .acceptCookieIfPresent()

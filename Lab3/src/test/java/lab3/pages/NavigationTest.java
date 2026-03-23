@@ -5,11 +5,11 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@DisplayName("UC-05: Main Menu Navigation")
+@DisplayName("UC-02: Main Menu Navigation")
 class NavigationTest extends BaseTest {
 
     @Test
-    @DisplayName("TC-29: Clicking News navigates to the news page")
+    @DisplayName("TC-08: Clicking News navigates to the news page")
     void testNavigateToNews() {
         HomePage home = new HomePage(driver).open().acceptCookieIfPresent();
         NewsPage newsPage = home.clickNavNews();
@@ -18,7 +18,7 @@ class NavigationTest extends BaseTest {
     }
 
     @Test
-    @DisplayName("TC-30: Clicking Game navigates to the game page")
+    @DisplayName("TC-09: Clicking Game navigates to the game page")
     void testNavigateToGame() {
         HomePage home = new HomePage(driver).open().acceptCookieIfPresent();
         GameInfoPage gamePage = home.clickNavGame();
@@ -27,7 +27,7 @@ class NavigationTest extends BaseTest {
     }
 
     @Test
-    @DisplayName("TC-31: Clicking Media navigates to the media page")
+    @DisplayName("TC-10: Clicking Media navigates to the media page")
     void testNavigateToMedia() {
         HomePage home = new HomePage(driver).open().acceptCookieIfPresent();
         home.clickNavMedia();
@@ -37,7 +37,7 @@ class NavigationTest extends BaseTest {
     }
 
     @Test
-    @DisplayName("TC-32: Clicking Community navigates to the community area")
+    @DisplayName("TC-11: Clicking Community navigates to the community area")
     void testNavigateToCommunity() {
         HomePage home = new HomePage(driver).open().acceptCookieIfPresent();
         home.clickNavCommunity();
@@ -47,7 +47,7 @@ class NavigationTest extends BaseTest {
     }
 
     @Test
-    @DisplayName("TC-33: Browser back button returns to the RU home page")
+    @DisplayName("TC-12: Browser back button returns to the RU home page")
     void testBrowserBackNavigation() {
         HomePage home = new HomePage(driver).open().acceptCookieIfPresent();
         home.clickNavNews();
@@ -58,13 +58,17 @@ class NavigationTest extends BaseTest {
     }
 
     @Test
-    @DisplayName("TC-34: Tested pages have non-empty titles")
+    @DisplayName("TC-13: Tested pages have non-empty titles")
     void testPageTitlesNotEmpty() {
         String[] urls = {
                 "https://worldoftanks.eu/ru/",
                 "https://worldoftanks.eu/ru/news/",
                 "https://worldoftanks.eu/ru/game/",
-                "https://worldoftanks.eu/ru/community/accounts/"
+                "https://worldoftanks.eu/ru/community/accounts/",
+                "https://worldoftanks.eu/ru/content/guide/",
+                "https://worldoftanks.eu/ru/clanwars/?link_place=wotp_link_main-menu",
+                "https://worldoftanks.eu/ru/tournaments/",
+                "https://worldoftanks.eu/ru/community/"
         };
 
         for (String url : urls) {
@@ -72,5 +76,41 @@ class NavigationTest extends BaseTest {
             assertFalse(driver.getTitle().isEmpty(),
                     "Page title must not be empty for: " + url);
         }
+    }
+
+    @Test
+    @DisplayName("TC-14: Clicking Guides navigates to the guides page")
+    void testNavigateToGuides() {
+        HomePage home = new HomePage(driver).open().acceptCookieIfPresent();
+        GuidePage guidePage = home.clickNavGuides();
+        assertTrue(guidePage.getCurrentUrl().contains("/content/guide/"),
+                "Must navigate to the guides page. Actual URL: " + guidePage.getCurrentUrl());
+    }
+
+    @Test
+    @DisplayName("TC-15: Clicking Clans navigates to the clans page")
+    void testNavigateToClans() {
+        HomePage home = new HomePage(driver).open().acceptCookieIfPresent();
+        ClansPage clansPage = home.clickNavClans();
+        assertTrue(clansPage.getCurrentUrl().contains("/clanwars/"),
+                "Must navigate to the clans page. Actual URL: " + clansPage.getCurrentUrl());
+    }
+
+    @Test
+    @DisplayName("TC-16: Clicking Tournaments navigates to the tournaments page")
+    void testNavigateToTournaments() {
+        HomePage home = new HomePage(driver).open().acceptCookieIfPresent();
+        TournamentsPage tournamentsPage = home.clickNavTournaments();
+        assertTrue(tournamentsPage.getCurrentUrl().contains("/tournaments/"),
+                "Must navigate to the tournaments page. Actual URL: " + tournamentsPage.getCurrentUrl());
+    }
+
+    @Test
+    @DisplayName("TC-17: Clicking Community hub navigates to the community hub page")
+    void testNavigateToCommunityHub() {
+        HomePage home = new HomePage(driver).open().acceptCookieIfPresent();
+        CommunityPage communityPage = home.clickNavCommunityHub();
+        assertTrue(communityPage.getCurrentUrl().contains("/community/"),
+                "Must navigate to the community hub page. Actual URL: " + communityPage.getCurrentUrl());
     }
 }
