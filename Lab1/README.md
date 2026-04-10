@@ -24,6 +24,7 @@
 
 ```
 Lab1/
+  dop/     # extra task: stateful testing
   part1/   # arcsin(x) (степенной ряд) + unit tests
   part2/   # bucket sort + тестирование по "характерным точкам"
   part3/   # доменная модель текста + unit tests

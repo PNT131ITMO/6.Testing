@@ -1,8 +1,18 @@
 package dop.splay;
 
-import dop.splay.actions.*;
-import net.jqwik.api.*;
-import net.jqwik.api.stateful.*;
+import dop.splay.actions.DeleteAction;
+import dop.splay.actions.InsertAction;
+import dop.splay.actions.RotateLeftAction;
+import dop.splay.actions.RotateRightAction;
+import dop.splay.actions.SearchAction;
+import net.jqwik.api.Arbitraries;
+import net.jqwik.api.Arbitrary;
+import net.jqwik.api.ForAll;
+import net.jqwik.api.Property;
+import net.jqwik.api.Provide;
+import net.jqwik.api.ShrinkingMode;
+import net.jqwik.api.stateful.Action;
+import net.jqwik.api.stateful.ActionSequence;
 
 class SplayTreeStatefulPropertyTest {
 
@@ -19,23 +29,21 @@ class SplayTreeStatefulPropertyTest {
         );
 
         Arbitrary<Integer> sizes = Arbitraries.integers().between(1000, 1500);
-
         return sizes.flatMap(n -> Arbitraries.sequences(actions).ofSize(n));
     }
 
     @Property(tries = 50, shrinking = ShrinkingMode.FULL)
-    void stateful_random_sequences_preserve_invariants(
+    void statefulRandomSequencesPreserveInvariants(
         @ForAll("splaySequences") ActionSequence<World> sequence
     ) {
-        World w = new World();
+        World world = new World();
         try {
-            sequence.run(w);
-        } catch (AssertionError | RuntimeException e) {
-            System.err.println("\nMinimal Failing Sequence:");
+            sequence.run(world);
+        } catch (AssertionError | RuntimeException error) {
+            System.err.println("\nFailing sequence reported by jqwik:");
             System.err.println(sequence);
-
-            FailureArtifacts.writeMinimalFailingSequence(sequence, e);
-            throw e;
+            FailureArtifacts.writeFailureReport(sequence, world, error);
+            throw error;
         }
     }
 }

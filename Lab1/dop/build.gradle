@@ -22,6 +22,14 @@ test {
         events "passed", "skipped", "failed"
     }
     systemProperty "demoBug", System.getProperty("demoBug", "false")
+    systemProperty "statefulArtifactDir",
+            layout.buildDirectory.dir("stateful-artifacts").get().asFile.absolutePath
+
+    testLogging {
+        events "passed", "failed", "skipped", "standardOut", "standardError"
+        showStandardStreams = true
+        exceptionFormat "full"
+    }
 }
 
 application {
