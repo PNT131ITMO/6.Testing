@@ -1,5 +1,6 @@
 package lab2.system;
 
+import lab2.api.MathFunction;
 import lab2.core.AbstractMathFunction;
 import lab2.mathfunctions.log.LnFunction;
 import lab2.mathfunctions.log.LogBaseFunction;
@@ -10,17 +11,17 @@ import java.math.MathContext;
 
 public class SystemFunction extends AbstractMathFunction {
 
-  private SinFunction sinFunction;
-  private CosFunction cosFunction;
-  private TanFunction tanFunction;
-  private SecFunction secFunction;
-  private CscFunction cscFunction;
-  private CotFunction cotFunction;
+  private MathFunction sinFunction;
+  private MathFunction cosFunction;
+  private MathFunction tanFunction;
+  private MathFunction secFunction;
+  private MathFunction cscFunction;
+  private MathFunction cotFunction;
 
-  private LnFunction lnFunction;
-  private LogBaseFunction log2Function;
-  private LogBaseFunction log5Function;
-  private LogBaseFunction log10Function;
+  private MathFunction lnFunction;
+  private MathFunction log2Function;
+  private MathFunction log5Function;
+  private MathFunction log10Function;
 
   public SystemFunction() {
     SinFunction baseSin = new SinFunction();
@@ -41,16 +42,16 @@ public class SystemFunction extends AbstractMathFunction {
   }
 
   public SystemFunction(
-      SinFunction sinFunction,
-      CosFunction cosFunction,
-      TanFunction tanFunction,
-      SecFunction secFunction,
-      CscFunction cscFunction,
-      CotFunction cotFunction,
-      LnFunction lnFunction,
-      LogBaseFunction log2Function,
-      LogBaseFunction log5Function,
-      LogBaseFunction log10Function
+      MathFunction sinFunction,
+      MathFunction cosFunction,
+      MathFunction tanFunction,
+      MathFunction secFunction,
+      MathFunction cscFunction,
+      MathFunction cotFunction,
+      MathFunction lnFunction,
+      MathFunction log2Function,
+      MathFunction log5Function,
+      MathFunction log10Function
   ) {
     this.sinFunction = sinFunction;
     this.cosFunction = cosFunction;
