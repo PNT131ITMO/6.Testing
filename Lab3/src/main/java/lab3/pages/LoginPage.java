@@ -6,14 +6,22 @@ public class LoginPage extends BasePage {
 
     private static final String XPATH_EMAIL_INPUT =
             "//input[@type='email' or @name='login' or @name='email' or contains(@autocomplete,'username')]";
+
     private static final String XPATH_PASSWORD_INPUT =
             "//input[@type='password' or @name='password' or contains(@autocomplete,'current-password')]";
+
     private static final String XPATH_SUBMIT_BTN =
             "//button[@type='submit'] | //input[@type='submit']";
+
     private static final String XPATH_FORGOT_LINK =
-            "//a[contains(translate(normalize-space(.),'FORGOTPASSWORDЗАБЫЛИПАРОЛЬ','forgotpasswordзабылыпароль'),'forgot') or contains(normalize-space(.),'Забыли') or contains(@href,'password')]";
+            "//a[contains(translate(normalize-space(.),'FORGOTPASSWORDЗАБЫЛИПАРОЛЬ','forgotpasswordзабылыпароль'),'forgot') " +
+            "or contains(normalize-space(.),'Забыли') " +
+            "or contains(@href,'password')]";
+
     private static final String XPATH_LEGAL_LINKS =
-            "//a[contains(normalize-space(.),'License') or contains(normalize-space(.),'Agreement') or contains(normalize-space(.),'Privacy')]";
+            "//a[contains(normalize-space(.),'License') " +
+            "or contains(normalize-space(.),'Agreement') " +
+            "or contains(normalize-space(.),'Privacy')]";
 
     public LoginPage(WebDriver driver) {
         super(driver);
@@ -37,6 +45,21 @@ public class LoginPage extends BasePage {
         enterEmail(email);
         enterPassword(password);
         clickSubmit();
+    }
+
+    public boolean waitForAuthFlowToFinish() {
+        return waitForUrlContains("worldoftanks.eu", "worldoftanks.ru", "community/accounts", "wargaming.net")
+                || waitForPageSourceContainsAny(
+                "My Profile",
+                "Log out",
+                "Мой профиль",
+                "Выйти",
+                "Выход",
+                "Account Management",
+                "Search Players",
+                "Statistics",
+                "Статистика"
+        );
     }
 
     public boolean isOnLoginPage() {

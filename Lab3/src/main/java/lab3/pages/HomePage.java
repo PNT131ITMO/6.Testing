@@ -7,49 +7,65 @@ public class HomePage extends BasePage {
     public static final String URL = "https://worldoftanks.eu/ru/";
 
     private static final String XPATH_LOGO =
-            "//a[contains(@href,'/ru/') and (contains(normalize-space(.),'World of Tanks') or .//img)]";
+        "(" +
+        "//a[" +
+        "contains(translate(@class,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'),'logo') " +
+        "or .//*[contains(translate(@class,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'),'logo')] " +
+        "or contains(translate(@aria-label,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'),'world of tanks') " +
+        "or contains(translate(@title,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'),'world of tanks') " +
+        "or .//img[contains(translate(@alt,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'),'world of tanks')] " +
+        "or contains(translate(normalize-space(.),'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'),'world of tanks')" +
+        "]" +
+        ")[1]";
 
     private static final String XPATH_LOGIN_BTN =
-            "(//a[normalize-space()='Войти' and contains(@href,'/auth/oid/')])[1]";
+            "(//a[normalize-space()='Войти' or normalize-space()='Log in' or contains(@href,'/auth/oid/')])[1]";
 
     private static final String XPATH_REGISTER_BTN =
-            "//a[contains(normalize-space(.),'Зарегистрироваться') or contains(@href,'registration') or contains(@href,'red.wargaming.net')]";
+            "//a[contains(normalize-space(.),'Зарегистрироваться') " +
+            "or contains(normalize-space(.),'Create account') " +
+            "or contains(@href,'registration') " +
+            "or contains(@href,'red.wargaming.net')]";
 
     private static final String XPATH_NAV_NEWS =
-            "//a[normalize-space()='Новости' or contains(@href,'/ru/news/')]";
+            "//a[normalize-space()='Новости' or normalize-space()='News' or contains(@href,'/news/')]";
 
     private static final String XPATH_NAV_GAME =
-            "//a[normalize-space()='Игра' or contains(@href,'/ru/game/')]";
+            "//a[normalize-space()='Игра' or normalize-space()='Game' or contains(@href,'/game/')]";
 
     private static final String XPATH_NAV_MEDIA =
-            "//a[normalize-space()='Медиа' or contains(@href,'/ru/media/')]";
+            "//a[normalize-space()='Медиа' or normalize-space()='Media' or contains(@href,'/media/')]";
 
     private static final String XPATH_NAV_COMMUNITY =
-            "//a[normalize-space()='Сообщество' or normalize-space()='Поиск игроков' or contains(@href,'/ru/community/') or contains(@href,'/community/accounts/')]";
+            "//a[normalize-space()='Сообщество' or normalize-space()='Community' or " +
+            "normalize-space()='Поиск игроков' or normalize-space()='Search Players' or " +
+            "contains(@href,'/community/') or contains(@href,'/community/accounts/')]";
 
     private static final String XPATH_PLAYER_SEARCH_LINK =
-            "//a[normalize-space()='Поиск игроков' or contains(@href,'/community/accounts/')]";
+            "//a[normalize-space()='Поиск игроков' or normalize-space()='Search Players' or contains(@href,'/community/accounts/')]";
 
     private static final String XPATH_NAV_GUIDES =
-            "//a[normalize-space()='Руководства' or contains(@href,'/content/guide/')]";
+            "//a[normalize-space()='Руководства' or normalize-space()='Guides' or contains(@href,'/content/guide/')]";
 
     private static final String XPATH_NAV_CLANS =
-            "//a[normalize-space()='Кланы' or contains(@href,'/clanwars/')]";
+            "//a[normalize-space()='Кланы' or normalize-space()='Clans' or contains(@href,'/clanwars/')]";
 
     private static final String XPATH_NAV_TOURNAMENTS =
-            "//a[normalize-space()='Турниры' or contains(@href,'/tournaments/')]";
+            "//a[normalize-space()='Турниры' or normalize-space()='Tournaments' or contains(@href,'/tournaments/')]";
 
     private static final String XPATH_NAV_COMMUNITY_HUB =
-            "//a[normalize-space()='Сообщество' or contains(@href,'/community/')]";
+            "//a[normalize-space()='Сообщество' or normalize-space()='Community' or contains(@href,'/community/')]";
 
     private static final String XPATH_HERO_BANNER =
-            "//*[contains(normalize-space(.),'ТАНКОВЫЙ ОНЛАЙН-ЭКШЕН') or contains(normalize-space(.),'Легендарная танковая онлайн-игра')]";
+            "//*[contains(normalize-space(.),'ТАНКОВЫЙ ОНЛАЙН-ЭКШЕН') " +
+            "or contains(normalize-space(.),'Легендарная танковая онлайн-игра') " +
+            "or contains(normalize-space(.),'Legendary online tank action game')]";
 
     private static final String XPATH_NEWS_BLOCK =
-            "//*[self::h2 or self::h3][contains(normalize-space(.),'Новости')]";
+            "//*[self::h2 or self::h3][contains(normalize-space(.),'Новости') or contains(normalize-space(.),'News')]";
 
     private static final String XPATH_REGION_BLOCK =
-            "//*[contains(normalize-space(.),'Выберите регион')]";
+            "//*[contains(normalize-space(.),'Выберите регион') or contains(normalize-space(.),'Select a region')]";
 
     private static final String XPATH_COOKIE_ACCEPT =
             "//button[contains(normalize-space(.),'Принять') or contains(normalize-space(.),'Accept')]";
@@ -63,7 +79,7 @@ public class HomePage extends BasePage {
 
     public HomePage open() {
         driver.get(URL);
-        waitForUrlContains("worldoftanks.eu/ru", "worldoftanks.ru");
+        waitForUrlContains("worldoftanks.eu/ru", "worldoftanks.eu", "worldoftanks.ru");
         return this;
     }
 
@@ -77,7 +93,7 @@ public class HomePage extends BasePage {
     public LoginPage clickLogin() {
         String oldUrl = driver.getCurrentUrl();
 
-        waitForXPath(XPATH_LOGIN_BTN);
+        waitForAnyVisible(XPATH_LOGIN_BTN);
         scrollAndClick(XPATH_LOGIN_BTN);
 
         wait.until(d -> !d.getCurrentUrl().equals(oldUrl));
@@ -170,7 +186,14 @@ public class HomePage extends BasePage {
         }
     }
 
-    public boolean isLogoVisible() { return isVisibleByXPath(XPATH_LOGO); }
+    public boolean waitForGuestState() {
+        return waitForAnyVisible(XPATH_LOGIN_BTN)
+                || waitForPageSourceContainsAny("Log in", "Войти", "Create account", "Зарегистрироваться");
+    }
+
+    public boolean isLogoVisible() {
+        return waitForAnyVisible(XPATH_LOGO);
+    }
     public boolean isLoginBtnVisible() { return isVisibleByXPath(XPATH_LOGIN_BTN); }
     public boolean isRegisterBtnVisible() { return isVisibleByXPath(XPATH_REGISTER_BTN); }
     public boolean isHeroBannerVisible() { return isVisibleByXPath(XPATH_HERO_BANNER); }
