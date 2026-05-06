@@ -10,6 +10,7 @@ repositories {
 }
 
 dependencies {
+
     implementation 'org.seleniumhq.selenium:selenium-java:4.18.1'
     implementation 'io.github.bonigarcia:webdrivermanager:5.7.0'
     testImplementation  'org.junit.jupiter:junit-jupiter:5.11.4'
@@ -17,6 +18,10 @@ dependencies {
     testRuntimeOnly     'org.junit.jupiter:junit-jupiter-engine:5.11.4'
     testRuntimeOnly     'org.junit.platform:junit-platform-launcher:1.11.4'
     implementation 'org.slf4j:slf4j-simple:2.0.12'
+
+    // Allure
+    testImplementation 'io.qameta.allure:allure-junit5:2.34.0'
+    testImplementation 'io.qameta.allure:allure-java-commons:2.34.0'
 }
 
 test {

@@ -1,0 +1,42 @@
+plugins {
+    id 'java'
+}
+
+group = 'lab3.extra'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'org.seleniumhq.selenium:selenium-java:4.18.1'
+    testImplementation 'io.github.bonigarcia:webdrivermanager:5.7.0'
+
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.11.4'
+    testImplementation 'org.junit.jupiter:junit-jupiter-params:5.11.4'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.11.4'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.11.4'
+
+    testImplementation 'org.slf4j:slf4j-simple:2.0.12'
+}
+
+test {
+    useJUnitPlatform()
+
+    systemProperty 'webdriver.port', System.getProperty('webdriver.port', '9516')
+    systemProperty 'protocol.pause.ms', System.getProperty('protocol.pause.ms', '1500')
+    systemProperty 'webdriver.headless', System.getProperty('webdriver.headless', 'false')
+    systemProperty 'edge.driver.path', System.getProperty('edge.driver.path', '')
+
+    testLogging {
+        events 'passed', 'skipped', 'failed'
+        showStandardStreams = true
+        exceptionFormat = org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
+    }
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+}
