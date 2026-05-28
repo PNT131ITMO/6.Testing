@@ -1,0 +1,169 @@
+{
+    "limit_ms": 670,
+    "rpm_per_user": 40,
+    "summary": [
+        {
+            "file": "stress_12.csv",
+            "users": 12,
+            "load_req_min": 480,
+            "samples": 1227,
+            "avg_ms": 398.38,
+            "median_ms": 404.0,
+            "p90_ms": 419.0,
+            "p95_ms": 432.0,
+            "p99_ms": 459.18,
+            "max_ms": 667.0,
+            "error_percent": 0.0,
+            "has_403": false,
+            "has_503": false,
+            "http_codes": {
+                "200": 1227
+            },
+            "ok": true,
+            "failure_reason": ""
+        },
+        {
+            "file": "stress_15.csv",
+            "users": 15,
+            "load_req_min": 600,
+            "samples": 1514,
+            "avg_ms": 446.95,
+            "median_ms": 417.0,
+            "p90_ms": 449.0,
+            "p95_ms": 461.0,
+            "p99_ms": 1120.35,
+            "max_ms": 3492.0,
+            "error_percent": 0.0,
+            "has_403": false,
+            "has_503": false,
+            "http_codes": {
+                "200": 1514
+            },
+            "ok": true,
+            "failure_reason": ""
+        },
+        {
+            "file": "stress_18.csv",
+            "users": 18,
+            "load_req_min": 720,
+            "samples": 1559,
+            "avg_ms": 782.43,
+            "median_ms": 444.0,
+            "p90_ms": 501.0,
+            "p95_ms": 3373.9,
+            "p99_ms": 8366.0,
+            "max_ms": 8965.0,
+            "error_percent": 0.128,
+            "has_403": false,
+            "has_503": false,
+            "http_codes": {
+                "200": 1557,
+                "500": 2
+            },
+            "ok": false,
+            "failure_reason": "p95>670; errors>0"
+        },
+        {
+            "file": "stress_21.csv",
+            "users": 21,
+            "load_req_min": 840,
+            "samples": 2130,
+            "avg_ms": 478.08,
+            "median_ms": 488.0,
+            "p90_ms": 508.0,
+            "p95_ms": 520.0,
+            "p99_ms": 554.71,
+            "max_ms": 599.0,
+            "error_percent": 0.0,
+            "has_403": false,
+            "has_503": false,
+            "http_codes": {
+                "200": 2130
+            },
+            "ok": true,
+            "failure_reason": ""
+        },
+        {
+            "file": "stress_24.csv",
+            "users": 24,
+            "load_req_min": 960,
+            "samples": 2353,
+            "avg_ms": 603.72,
+            "median_ms": 512.0,
+            "p90_ms": 673.0,
+            "p95_ms": 776.0,
+            "p99_ms": 1688.0,
+            "max_ms": 11238.0,
+            "error_percent": 0.042,
+            "has_403": false,
+            "has_503": false,
+            "http_codes": {
+                "200": 2352,
+                "500": 1
+            },
+            "ok": false,
+            "failure_reason": "p95>670; errors>0"
+        },
+        {
+            "file": "stress_27.csv",
+            "users": 27,
+            "load_req_min": 1080,
+            "samples": 1768,
+            "avg_ms": 2061.68,
+            "median_ms": 2470.0,
+            "p90_ms": 3384.0,
+            "p95_ms": 3702.0,
+            "p99_ms": 4116.0,
+            "max_ms": 4703.0,
+            "error_percent": 0.0,
+            "has_403": false,
+            "has_503": false,
+            "http_codes": {
+                "200": 1768
+            },
+            "ok": false,
+            "failure_reason": "p95>670"
+        },
+        {
+            "file": "stress_30.csv",
+            "users": 30,
+            "load_req_min": 1200,
+            "samples": 1968,
+            "avg_ms": 1667.71,
+            "median_ms": 621.0,
+            "p90_ms": 5012.5,
+            "p95_ms": 5757.65,
+            "p99_ms": 7642.0,
+            "max_ms": 7652.0,
+            "error_percent": 0.0,
+            "has_403": false,
+            "has_503": false,
+            "http_codes": {
+                "200": 1968
+            },
+            "ok": false,
+            "failure_reason": "p95>670"
+        }
+    ],
+    "first_failure": {
+        "file": "stress_18.csv",
+        "users": 18,
+        "load_req_min": 720,
+        "samples": 1559,
+        "avg_ms": 782.43,
+        "median_ms": 444.0,
+        "p90_ms": 501.0,
+        "p95_ms": 3373.9,
+        "p99_ms": 8366.0,
+        "max_ms": 8965.0,
+        "error_percent": 0.128,
+        "has_403": false,
+        "has_503": false,
+        "http_codes": {
+            "200": 1557,
+            "500": 2
+        },
+        "ok": false,
+        "failure_reason": "p95>670; errors>0"
+    }
+}

@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>WebDriver Protocol Test Page</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 48px;
+            line-height: 1.5;
+        }
+
+        button {
+            font-size: 18px;
+            padding: 12px 20px;
+            cursor: pointer;
+        }
+
+        #result {
+            margin-top: 18px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<h1>Edge WebDriver Protocol Test Page</h1>
+
+<p>This local page is used to capture Selenium WebDriver HTTP commands between Selenium Java Client and Microsoft EdgeDriver.</p>
+
+<button id="go-button" type="button">Click me</button>
+
+<p id="result">Not clicked yet</p>
+
+<script>
+    document.getElementById('go-button').addEventListener('click', function () {
+        document.getElementById('result').textContent = 'Clicked';
+        document.body.setAttribute('data-clicked', 'true');
+    });
+</script>
+</body>
+</html>

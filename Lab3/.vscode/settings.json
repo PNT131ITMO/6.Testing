@@ -1,4 +1,7 @@
 {
     "java.configuration.updateBuildConfiguration": "automatic",
-    "java.compile.nullAnalysis.mode": "automatic"
+    "java.compile.nullAnalysis.mode": "automatic",
+    "editor.fontFamily": "'JetBrainsMonoNL Nerd Font Mono', 'JetBrainsMonoNL Nerd Font', 'JetBrainsMono Nerd Font Mono', 'JetBrainsMono Nerd Font', 'Droid Sans Mono', 'monospace', monospace",
+    "editor.fontLigatures": true,
+     "terminal.integrated.fontLigatures.enabled": true,
 }

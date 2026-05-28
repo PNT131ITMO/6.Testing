@@ -1,0 +1,47 @@
+{
+    "host": "localhost",
+    "port": 8079,
+    "ssh_tunnel_command": "ssh -N -L 8079:stload.se.ifmo.ru:8080 s374807@se.ifmo.ru -p 2222",
+    "target_original_host": "stload.se.ifmo.ru",
+    "target_original_port": 8080,
+    "token": "496193058",
+    "user": "-1360753733",
+    "configs": [
+        {
+            "config": 1,
+            "price": 1400
+        },
+        {
+            "config": 2,
+            "price": 2100
+        },
+        {
+            "config": 3,
+            "price": 3500
+        }
+    ],
+    "max_parallel_users": 12,
+    "requests_per_minute_per_user": 40,
+    "total_load_requests_per_minute": 480,
+    "max_response_time_ms": 670,
+    "load_test": {
+        "threads": 12,
+        "ramp_up_seconds": 60,
+        "duration_seconds": 300,
+        "throughput_per_thread_per_minute": 40
+    },
+    "stress_test": {
+        "levels_users": [
+            12,
+            15,
+            18,
+            21,
+            24,
+            27,
+            30
+        ],
+        "ramp_up_seconds": 60,
+        "duration_seconds": 180,
+        "throughput_per_thread_per_minute": 40
+    }
+}

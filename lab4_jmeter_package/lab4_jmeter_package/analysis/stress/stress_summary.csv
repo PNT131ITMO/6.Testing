@@ -1,0 +1,8 @@
+file,users,load_req_min,samples,avg_ms,median_ms,p90_ms,p95_ms,p99_ms,max_ms,error_percent,has_403,has_503,ok,failure_reason
+stress_12.csv,12,480,1227,398.38,404.0,419.0,432.0,459.18,667.0,0.0,False,False,True,
+stress_15.csv,15,600,1514,446.95,417.0,449.0,461.0,1120.35,3492.0,0.0,False,False,True,
+stress_18.csv,18,720,1559,782.43,444.0,501.0,3373.9,8366.0,8965.0,0.128,False,False,False,p95>670; errors>0
+stress_21.csv,21,840,2130,478.08,488.0,508.0,520.0,554.71,599.0,0.0,False,False,True,
+stress_24.csv,24,960,2353,603.72,512.0,673.0,776.0,1688.0,11238.0,0.042,False,False,False,p95>670; errors>0
+stress_27.csv,27,1080,1768,2061.68,2470.0,3384.0,3702.0,4116.0,4703.0,0.0,False,False,False,p95>670
+stress_30.csv,30,1200,1968,1667.71,621.0,5012.5,5757.65,7642.0,7652.0,0.0,False,False,False,p95>670

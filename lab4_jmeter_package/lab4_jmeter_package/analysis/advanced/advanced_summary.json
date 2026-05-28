@@ -1,0 +1,102 @@
+{
+    "total_samples": 12519,
+    "total_errors": 3,
+    "overall_error_percent": 0.023963575365444526,
+    "response_time_ms": {
+        "mean": 938.6735362249381,
+        "median": 493.0,
+        "p90": 2715.0,
+        "p95": 3500.0999999999985,
+        "p99": 5938.039999999994,
+        "max": 11238.0
+    },
+    "error_codes": {
+        "500": 3
+    },
+    "by_load": [
+        {
+            "target_users": 12,
+            "load_req_min": 480,
+            "samples": 1227,
+            "avg_ms": 398.3838630806846,
+            "median_ms": 404.0,
+            "p90_ms": 419.0,
+            "p95_ms": 432.0,
+            "p99_ms": 459.18000000000006,
+            "max_ms": 667,
+            "error_percent": 0.0
+        },
+        {
+            "target_users": 15,
+            "load_req_min": 600,
+            "samples": 1514,
+            "avg_ms": 446.94848084544253,
+            "median_ms": 417.0,
+            "p90_ms": 449.0,
+            "p95_ms": 461.0,
+            "p99_ms": 1120.3499999999995,
+            "max_ms": 3492,
+            "error_percent": 0.0
+        },
+        {
+            "target_users": 18,
+            "load_req_min": 720,
+            "samples": 1559,
+            "avg_ms": 782.4265554842848,
+            "median_ms": 444.0,
+            "p90_ms": 501.0,
+            "p95_ms": 3373.8999999999974,
+            "p99_ms": 8366.0,
+            "max_ms": 8965,
+            "error_percent": 0.12828736369467605
+        },
+        {
+            "target_users": 21,
+            "load_req_min": 840,
+            "samples": 2130,
+            "avg_ms": 478.0755868544601,
+            "median_ms": 488.0,
+            "p90_ms": 508.0,
+            "p95_ms": 520.0,
+            "p99_ms": 554.71,
+            "max_ms": 599,
+            "error_percent": 0.0
+        },
+        {
+            "target_users": 24,
+            "load_req_min": 960,
+            "samples": 2353,
+            "avg_ms": 603.7165320866978,
+            "median_ms": 512.0,
+            "p90_ms": 673.0,
+            "p95_ms": 776.0,
+            "p99_ms": 1688.0,
+            "max_ms": 11238,
+            "error_percent": 0.042498937526561836
+        },
+        {
+            "target_users": 27,
+            "load_req_min": 1080,
+            "samples": 1768,
+            "avg_ms": 2061.6838235294117,
+            "median_ms": 2470.0,
+            "p90_ms": 3384.0,
+            "p95_ms": 3702.0,
+            "p99_ms": 4116.0,
+            "max_ms": 4703,
+            "error_percent": 0.0
+        },
+        {
+            "target_users": 30,
+            "load_req_min": 1200,
+            "samples": 1968,
+            "avg_ms": 1667.7088414634147,
+            "median_ms": 621.0,
+            "p90_ms": 5012.5,
+            "p95_ms": 5757.65,
+            "p99_ms": 7642.0,
+            "max_ms": 7652,
+            "error_percent": 0.0
+        }
+    ]
+}

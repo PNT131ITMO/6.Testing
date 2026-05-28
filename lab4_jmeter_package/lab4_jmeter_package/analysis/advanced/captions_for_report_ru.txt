@@ -1,0 +1,37 @@
+Названия рисунков для отчёта
+
+01_latency_and_error_rate.png
+Рисунок — Оценка задержки и частоты ошибок
+
+02_average_latency_by_users.png
+Рисунок — Оценка средней задержки для количества параллельных пользователей
+
+03_response_time_over_time_by_concurrency.png
+Рисунок — Оценка времени отклика во времени от количества параллельных пользователей
+
+04_concurrent_users_distribution.png
+Рисунок — Распределение параллельных пользователей
+
+05_response_time_percentiles_over_time.png
+Рисунок — Перцентили времени обработки запроса во времени
+
+06_response_time_autocorrelation.png
+Рисунок — График автокорреляции для времени отклика
+
+07_error_type_distribution_over_time.png
+Рисунок — Динамика распределения ошибок по типам HTTP-статусов
+
+08_error_clusters_time.png
+Рисунок — Кластеризация ошибок во временном пространстве
+
+09_response_time_degradation_forecast.png
+Рисунок — Прогнозирование деградации времени отклика
+
+10_error_rate_by_thread.png
+Рисунок — Распределение частоты ошибок между потоками
+
+11_performance_anomaly_detection.png
+Рисунок — Выявление аномалий в производительности
+
+12_error_interval_analysis.png
+Рисунок — Анализ временных интервалов между ошибками

@@ -1,0 +1,70 @@
+{
+    "limit_ms": 670,
+    "summary": [
+        {
+            "config": 1,
+            "price_usd": 1400,
+            "samples": 2187,
+            "load_req_min": 480,
+            "avg_ms": 1200.55,
+            "median_ms": 1198.0,
+            "p90_ms": 1227.0,
+            "p95_ms": 1234.0,
+            "max_ms": 1389.0,
+            "error_percent": 100.0,
+            "has_403": false,
+            "has_503": false,
+            "ok_by_p95": false,
+            "ok_by_average": false
+        },
+        {
+            "config": 2,
+            "price_usd": 2100,
+            "samples": 2184,
+            "load_req_min": 480,
+            "avg_ms": 800.55,
+            "median_ms": 798.0,
+            "p90_ms": 831.0,
+            "p95_ms": 836.0,
+            "max_ms": 983.0,
+            "error_percent": 100.0,
+            "has_403": false,
+            "has_503": false,
+            "ok_by_p95": false,
+            "ok_by_average": false
+        },
+        {
+            "config": 3,
+            "price_usd": 3500,
+            "samples": 2185,
+            "load_req_min": 480,
+            "avg_ms": 401.37,
+            "median_ms": 400.0,
+            "p90_ms": 429.0,
+            "p95_ms": 436.0,
+            "max_ms": 696.0,
+            "error_percent": 0.137,
+            "has_403": false,
+            "has_503": false,
+            "ok_by_p95": false,
+            "ok_by_average": true
+        }
+    ],
+    "selected_config": {
+        "config": 3,
+        "price_usd": 3500,
+        "samples": 2185,
+        "load_req_min": 480,
+        "avg_ms": 401.37,
+        "median_ms": 400.0,
+        "p90_ms": 429.0,
+        "p95_ms": 436.0,
+        "max_ms": 696.0,
+        "error_percent": 0.137,
+        "has_403": false,
+        "has_503": false,
+        "ok_by_p95": false,
+        "ok_by_average": true,
+        "selection_reason": "no configuration satisfies strict criterion; selected best observed configuration for stress test"
+    }
+}

@@ -27,7 +27,7 @@ test {
     systemProperty 'webdriver.port', System.getProperty('webdriver.port', '9516')
     systemProperty 'protocol.pause.ms', System.getProperty('protocol.pause.ms', '1500')
     systemProperty 'webdriver.headless', System.getProperty('webdriver.headless', 'false')
-    systemProperty 'edge.driver.path', System.getProperty('edge.driver.path', '')
+    systemProperty 'edge.driver.path', System.getProperty('edge.driver.path', '../drivers/msedgedriver.exe')
 
     testLogging {
         events 'passed', 'skipped', 'failed'
